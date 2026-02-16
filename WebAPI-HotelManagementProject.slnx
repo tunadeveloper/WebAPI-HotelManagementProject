@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/APIConsume/">
+    <Project Path="APIConsume/HotelManagement.BusinessLayer/HotelManagement.BusinessLayer.csproj" Id="69f7f172-52f1-4916-8d4a-e5e9ff1e84aa" />
+    <Project Path="APIConsume/HotelManagement.DataAccessLayer/HotelManagement.DataAccessLayer.csproj" Id="d0c32932-73e8-4b93-8aa4-e51c56e92b2c" />
+    <Project Path="APIConsume/HotelManagement.EntityLayer/HotelManagement.EntityLayer.csproj" />
+    <Project Path="APIConsume/HotelManagement.WebAPILayer/HotelManagement.WebAPILayer.csproj" Id="1aebe955-4cd8-4dac-888b-e629055ae331" />
+  </Folder>
+  <Folder Name="/Frontend/" />
+  <Folder Name="/ToDoList/" />
+</Solution>
