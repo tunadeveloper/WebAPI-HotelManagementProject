@@ -7,7 +7,7 @@ namespace HotelManagement.DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-97JKMRT\\SQLEXPRESS;initial catalog=HotelDb;integrated security=true");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-97JKMRT\\SQLEXPRESS;Initial Catalog=HotelDb;Integrated Security=true;Encrypt=False;TrustServerCertificate=True");
         }
 
         public DbSet<Room> Rooms { get; set; }

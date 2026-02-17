@@ -9,5 +9,4 @@
   <Folder Name="/Frontend/">
     <Project Path="Frontend/HotelManagement.WebUILayer/HotelManagement.WebUILayer.csproj" Id="fb9fe84e-c7c8-4a16-9872-d499f81f22d1" />
   </Folder>
-  <Folder Name="/ToDoList/" />
 </Solution>
