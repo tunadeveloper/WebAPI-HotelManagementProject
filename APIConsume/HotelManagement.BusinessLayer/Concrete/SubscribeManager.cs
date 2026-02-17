@@ -1,4 +1,4 @@
-﻿using HotelManagement.BusinessLayer.Abstract;
+using HotelManagement.BusinessLayer.Abstract;
 using HotelManagement.DataAccessLayer.Abstract;
 using HotelManagement.EntityLayer.Concrete;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.BusinessLayer.Concrete
 {
-    public class SubscribeManager : IGenericService<Subscribe>
+    public class SubscribeManager : ISubscribeService
     {
         private readonly ISubscribeDal _dal;
 

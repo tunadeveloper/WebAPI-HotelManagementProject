@@ -1,0 +1,62 @@
+@using HotelManagement.WebUILayer.Areas.Admin.Models.Room
+@model List<RoomViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100">
+        <div class="card-body p-4">
+            <div class="d-flex mb-4 justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Oda Listesi</h5>
+            </div>
+
+            <div class="table-responsive" data-simplebar>
+                <table class="table table-borderless align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Görsel</th>
+                            <th scope="col">Oda No</th>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Fiyat</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var room in Model)
+                            {
+                                <tr>
+                                    <td><span class="fs-3 fw-normal">@room.Id</span></td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            @if (!string.IsNullOrEmpty(room.CoverImage))
+                                            {
+                                                <img src="@room.CoverImage" width="50" height="50" class="rounded object-fit-cover" alt="@room.Title" />
+                                            }
+                                            else
+                                            {
+                                                <div class="rounded bg-light d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
+                                                    <i class="ti ti-photo fs-4 text-muted"></i>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td><p class="fs-3 fw-normal mb-0">@room.RoomNumber</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@room.Title</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@room.Price ₺</p></td>
+                                    <td>
+                                        <a href="#" class="btn btn-danger">Sil</a>
+                                        <a href="#" class="btn btn-warning">Düzenle</a>
+                                        <a href="#" class="btn btn-primary">Detaylar</a>
+                                    </td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

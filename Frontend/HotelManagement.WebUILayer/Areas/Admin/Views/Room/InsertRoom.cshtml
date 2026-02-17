@@ -1,0 +1,48 @@
+@using HotelManagement.WebUILayer.Areas.Admin.Models.Room
+@model InsertRoomViewModel
+@{
+    ViewData["Title"] = "InsertRoom";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Oda Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertRoom" asp-area="Admin">
+                    <div class="mb-3">
+                        <label for="RoomNumber" class="form-label">Oda Numarası</label>
+                        <input type="text" class="form-control" id="RoomNumber" name="RoomNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="Title" name="Title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Price" class="form-label">Fiyat</label>
+                        <input type="number" class="form-control" id="Price" name="Price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="CoverImage" class="form-label">Kapak Görseli</label>
+                        <input type="text" class="form-control" id="CoverImage" name="CoverImage">
+                    </div>
+                    <div class="mb-3">
+                        <label for="BedCount" class="form-label">Yatak Sayısı</label>
+                        <input type="text" class="form-control" id="BedCount" name="BedCount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="BathCount" class="form-label">Banyo Sayısı</label>
+                        <input type="text" class="form-control" id="BathCount" name="BathCount">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

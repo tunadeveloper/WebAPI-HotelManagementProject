@@ -1,0 +1,27 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+     @await Component.InvokeAsync("_AdminLayoutHeadComponentPartial")
+<body>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        @await Component.InvokeAsync("_AdminLayoutSidebarComponentPartial")
+        <div class="body-wrapper">
+            <div class="body-wrapper-inner">
+                <div class="container-fluid">
+
+                    @await Component.InvokeAsync("_AdminLayoutHeaderComponentPartial")
+
+                    @RenderBody()
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+ @await Component.InvokeAsync("_AdminLayoutScriptComponentPartial")
+</html>
