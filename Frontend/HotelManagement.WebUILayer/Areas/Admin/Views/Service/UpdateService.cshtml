@@ -1,0 +1,33 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs
+@model UpdateServiceDTO
+@{
+    ViewData["Title"] = "Hizmet Düzenle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Hizmet Bilgilerini Değiştir</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="UpdateService" asp-controller="Service" asp-area="Admin">
+                    <input type="hidden" name="Id" value="@Model?.Id" />
+                    <div class="mb-3">
+                        <label for="Icon" class="form-label">İkon</label>
+                        <input type="text" class="form-control" id="Icon" name="Icon" value="@Model?.Icon">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="Title" name="Title" value="@Model?.Title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="Description" name="Description" rows="4">@Model?.Description</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Service/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

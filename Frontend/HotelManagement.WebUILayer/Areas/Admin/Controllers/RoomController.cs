@@ -1,4 +1,5 @@
 using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
+using HotelManagement.DataTransferObjectLayer.DTOs.TestimonialDTOs;
 using HotelManagement.WebUILayer.Areas.Admin.Models.Room;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -33,10 +34,10 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         public IActionResult InsertRoom() => View();
 
         [HttpPost]
-        public async Task<IActionResult> InsertRoom(InsertRoomViewModel viewModel)
+        public async Task<IActionResult> InsertRoom(InsertRoomDTO dto)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(viewModel);
+            var jsonData = JsonConvert.SerializeObject(dto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("http://localhost:5191/api/Room", stringContent);
             if (responseMessage.IsSuccessStatusCode)
@@ -62,17 +63,17 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if(responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateRoomViewModel>(jsonData);
+                var values = JsonConvert.DeserializeObject<UpdateTestimonialDTO>(jsonData);
                 return View(values);
             }
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRoom(UpdateRoomViewModel viewModel)
+        public async Task<IActionResult> UpdateRoom(UpdateRoomDTO dto)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(viewModel);
+            var jsonData = JsonConvert.SerializeObject(dto);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PutAsync("http://localhost:5191/api/Room", content);
             if (responseMessage.IsSuccessStatusCode)

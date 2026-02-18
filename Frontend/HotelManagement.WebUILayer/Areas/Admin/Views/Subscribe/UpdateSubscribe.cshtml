@@ -1,0 +1,25 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs
+@model UpdateSubscribeDTO
+@{
+    ViewData["Title"] = "Abone Düzenle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Abone Bilgilerini Değiştir</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="UpdateSubscribe" asp-controller="Subscribe" asp-area="Admin">
+                    <input type="hidden" name="Id" value="@Model?.Id" />
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">E-posta</label>
+                        <input type="email" class="form-control" id="Email" name="Email" value="@Model?.Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Subscribe/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs
+@model InsertSubscribeDTO
+@{
+    ViewData["Title"] = "Abone Ekle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Abone Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertSubscribe" asp-controller="Subscribe" asp-area="Admin">
+                    <div class="mb-3">
+                        <label for="Email" class="form-label">E-posta</label>
+                        <input type="email" class="form-control" id="Email" name="Email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Subscribe/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

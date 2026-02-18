@@ -1,0 +1,32 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs
+@model InsertServiceDTO
+@{
+    ViewData["Title"] = "Hizmet Ekle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Hizmet Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertService" asp-controller="Service" asp-area="Admin">
+                    <div class="mb-3">
+                        <label for="Icon" class="form-label">İkon</label>
+                        <input type="text" class="form-control" id="Icon" name="Icon">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">Başlık</label>
+                        <input type="text" class="form-control" id="Title" name="Title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="Description" name="Description" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Service/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

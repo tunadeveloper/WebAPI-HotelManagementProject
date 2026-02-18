@@ -1,3 +1,4 @@
+using HotelManagement.DataTransferObjectLayer.DTOs.TestimonialDTOs;
 using HotelManagement.WebUILayer.Areas.Admin.Models.Testimonial;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -23,24 +24,24 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<TestimonialViewModel>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultTestimonialDTO>>(jsonData);
                 return View(values);
             }
-            return View(new List<TestimonialViewModel>());
+            return View();
         }
 
         public IActionResult InsertTestimonial() => View();
 
         [HttpPost]
-        public async Task<IActionResult> InsertTestimonial(InsertTestimonialViewModel viewModel)
+        public async Task<IActionResult> InsertTestimonial(InsertTestimonialDTO dto)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(viewModel);
+            var jsonData = JsonConvert.SerializeObject(dto);
             var stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("http://localhost:5191/api/Testimonial", stringContent);
             if (responseMessage.IsSuccessStatusCode)
                 return RedirectToAction("Index", "Testimonial", new { area = "Admin" });
-            return View(viewModel);
+            return View(dto);
         }
 
         public async Task<IActionResult> DeleteTestimonial(int id)
@@ -59,22 +60,22 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateTestimonialViewModel>(jsonData);
+                var values = JsonConvert.DeserializeObject<UpdateTestimonialDTO>(jsonData);
                 return View(values);
             }
             return RedirectToAction("Index", "Testimonial", new { area = "Admin" });
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateTestimonial(UpdateTestimonialViewModel viewModel)
+        public async Task<IActionResult> UpdateTestimonial(UpdateTestimonialDTO dto)
         {
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(viewModel);
+            var jsonData = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PutAsync("http://localhost:5191/api/Testimonial", content);
             if (responseMessage.IsSuccessStatusCode)
                 return RedirectToAction("Index", "Testimonial", new { area = "Admin" });
-            return View(viewModel);
+            return View(dto);
         }
     }
 }
