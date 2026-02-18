@@ -30,10 +30,10 @@ namespace HotelManagement.WebAPILayer.Controllers
             return Ok("Eklendi!");
         }
 
-        [HttpDelete]
-        public IActionResult DeleteTestimonial(int testimonialId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTestimonial(int id)
         {
-            var values = _testimonialService.GetByIdBL(testimonialId);
+            var values = _testimonialService.GetByIdBL(id);
             _testimonialService.DeleteBL(values);
             return Ok("Silindi!");
         }
@@ -45,10 +45,10 @@ namespace HotelManagement.WebAPILayer.Controllers
             return Ok("Güncellendi");
         }
 
-        [HttpGet("GetById")]
-        public IActionResult GetTestimonial(int testimonialId)
+        [HttpGet("{id}")]
+        public IActionResult GetTestimonial(int id)
         {
-            var values = _testimonialService.GetByIdBL(testimonialId);
+            var values = _testimonialService.GetByIdBL(id);
             return Ok(values);
         }
     }

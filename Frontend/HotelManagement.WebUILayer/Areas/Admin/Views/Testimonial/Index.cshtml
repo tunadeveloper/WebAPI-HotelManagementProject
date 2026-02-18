@@ -1,7 +1,7 @@
-@using HotelManagement.WebUILayer.Areas.Admin.Models.Room
-@model List<RoomViewModel>
+@using HotelManagement.WebUILayer.Areas.Admin.Models.Testimonial
+@model List<TestimonialViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Referanslar";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -9,18 +9,16 @@
     <div class="card w-100">
         <div class="card-body p-4">
             <div class="d-flex mb-4 justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">Oda Listesi</h5>
+                <h5 class="mb-0 fw-bold">Referans Listesi</h5>
             </div>
-           
             <div class="table-responsive" data-simplebar>
                 <table class="table table-borderless align-middle text-nowrap">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Görsel</th>
-                            <th scope="col">Oda No</th>
-                            <th scope="col">Başlık</th>
-                            <th scope="col">Fiyat</th>
+                            <th scope="col">Ad Soyad</th>
+                            <th scope="col">Yorum</th>
                             <th scope="col">İşlemler</th>
                         </tr>
                     </thead>
@@ -28,12 +26,12 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                <td><span class="fs-3 fw-normal">@item.Id</span></td>
+                                    <td><span class="fs-3 fw-normal">@item.Id</span></td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                        @if (!string.IsNullOrEmpty(item.CoverImage))
+                                            @if (!string.IsNullOrEmpty(item.ImageUrl))
                                             {
-                                            <img src="@item.CoverImage" width="50" height="50" class="rounded object-fit-cover" alt="@item.Title" />
+                                                <img src="@item.ImageUrl" width="50" height="50" class="rounded object-fit-cover" alt="@item.NameSurname" />
                                             }
                                             else
                                             {
@@ -43,20 +41,22 @@
                                             }
                                         </div>
                                     </td>
-                                <td><p class="fs-3 fw-normal mb-0">@item.RoomNumber</p></td>
-                                <td><p class="fs-3 fw-normal mb-0">@item.Title</p></td>
-                                <td><p class="fs-3 fw-normal mb-0">@item.Price ₺</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.NameSurname</p></td>
                                     <td>
-                                    <a href="/Admin/Room/DeleteRoom/@item.Id" class="btn btn-danger">Sil</a>
-                                    <a href="/Admin/Room/UpdateRoom/@item.Id" class="btn btn-warning">Düzenle</a>
-                                        <a href="#" class="btn btn-primary">Detaylar</a>
+                                        <p class="fs-3 fw-normal mb-0 text-muted" style="max-width:250px;">
+                                            @(item.Comment.Length > 60 ? item.Comment.Substring(0, 60) + "..." : item.Comment)
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/Testimonial/DeleteTestimonial/@item.Id" class="btn btn-danger">Sil</a>
+                                        <a href="/Admin/Testimonial/UpdateTestimonial/@item.Id" class="btn btn-warning">Düzenle</a>
                                     </td>
                                 </tr>
                             }
                     </tbody>
                 </table>
             </div>
-            <a href="/Admin/Room/InsertRoom" class="btn btn-success">Yeni Oda</a>
+            <a href="/Admin/Testimonial/InsertTestimonial" class="btn btn-success">Yeni Referans</a>
         </div>
     </div>
 </div>

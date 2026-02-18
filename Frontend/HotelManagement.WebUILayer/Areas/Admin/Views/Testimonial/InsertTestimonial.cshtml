@@ -1,0 +1,32 @@
+@using HotelManagement.WebUILayer.Areas.Admin.Models.Testimonial
+@model InsertTestimonialViewModel
+@{
+    ViewData["Title"] = "Referans Ekle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Referans Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertTestimonial" asp-controller="Testimonial" asp-area="Admin">
+                    <div class="mb-3">
+                        <label for="NameSurname" class="form-label">Ad Soyad</label>
+                        <input type="text" class="form-control" id="NameSurname" name="NameSurname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ImageUrl" class="form-label">Görsel URL</label>
+                        <input type="text" class="form-control" id="ImageUrl" name="ImageUrl">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Comment" class="form-label">Yorum</label>
+                        <textarea class="form-control" id="Comment" name="Comment" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Testimonial/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

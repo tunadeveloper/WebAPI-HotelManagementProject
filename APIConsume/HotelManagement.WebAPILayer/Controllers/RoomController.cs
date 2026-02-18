@@ -30,10 +30,10 @@ namespace HotelManagement.WebAPILayer.Controllers
             return Ok("Eklendi!");
         }
 
-        [HttpDelete]
-        public IActionResult DeleteRoom(int roomId)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRoom(int id)
         {
-            var values = _roomService.GetByIdBL(roomId);
+            var values = _roomService.GetByIdBL(id);
             _roomService.DeleteBL(values);
             return Ok("Silindi!");
         }
@@ -45,10 +45,10 @@ namespace HotelManagement.WebAPILayer.Controllers
             return Ok("Güncellendi");
         }
 
-        [HttpGet("GetById")]
-        public IActionResult GetRoom(int roomId)
+        [HttpGet("{id}")]
+        public IActionResult GetRoom(int id)
         {
-            var values = _roomService.GetByIdBL(roomId);
+            var values = _roomService.GetByIdBL(id);
             return Ok(values);
         }
     }

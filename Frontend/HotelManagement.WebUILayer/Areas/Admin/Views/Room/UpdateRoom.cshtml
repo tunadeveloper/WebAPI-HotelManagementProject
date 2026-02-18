@@ -1,43 +1,44 @@
 @using HotelManagement.WebUILayer.Areas.Admin.Models.Room
-@model InsertRoomViewModel
+@model UpdateRoomViewModel
 @{
-    ViewData["Title"] = "InsertRoom";
+    ViewData["Title"] = "UpdateRoom";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Oda Ekle</h5>
+        <h5 class="card-title fw-semibold mb-4">Oda Bilgilerini Değiştir</h5>
         <div class="card">
             <div class="card-body">
-                <form method="post" asp-action="InsertRoom" asp-area="Admin">
+                <form method="post" asp-action="UpdateRoom" asp-area="Admin">
+                    <input type="hidden" name="Id" value="@Model.Id" />
                     <div class="mb-3">
                         <label for="RoomNumber" class="form-label">Oda Numarası</label>
-                        <input type="text" class="form-control" id="RoomNumber" name="RoomNumber">
+                        <input type="text" class="form-control" id="RoomNumber" name="RoomNumber" value="@Model.RoomNumber">
                     </div>
                     <div class="mb-3">
                         <label for="Title" class="form-label">Başlık</label>
-                        <input type="text" class="form-control" id="Title" name="Title">
+                        <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title">
                     </div>
                     <div class="mb-3">
                         <label for="Price" class="form-label">Fiyat</label>
-                        <input type="number" class="form-control" id="Price" name="Price">
+                        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price">
                     </div>
                     <div class="mb-3">
                         <label for="CoverImage" class="form-label">Kapak Görseli</label>
-                        <input type="text" class="form-control" id="CoverImage" name="CoverImage">
+                        <input type="text" class="form-control" id="CoverImage" name="CoverImage" value="@Model.CoverImage">
                     </div>
                     <div class="mb-3">
                         <label for="BedCount" class="form-label">Yatak Sayısı</label>
-                        <input type="text" class="form-control" id="BedCount" name="BedCount">
+                        <input type="text" class="form-control" id="BedCount" name="BedCount" value="@Model.BedCount">
                     </div>
                     <div class="mb-3">
                         <label for="BathCount" class="form-label">Banyo Sayısı</label>
-                        <input type="text" class="form-control" id="BathCount" name="BathCount">
+                        <input type="text" class="form-control" id="BathCount" name="BathCount" value="@Model.BathCount">
                     </div>
                     <div class="mb-3">
                         <label for="Description" class="form-label">Açıklama</label>
-                        <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
+                        <textarea class="form-control" id="Description" name="Description" rows="3">@Model.Description</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Kaydet</button>
                     <a href="/Admin/Room/Index" class="btn btn-dark">İptal Et</a>
