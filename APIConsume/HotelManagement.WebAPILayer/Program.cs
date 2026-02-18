@@ -22,6 +22,8 @@ builder.Services.AddScoped<ISubscribeService, SubscribeManager>();
 builder.Services.AddScoped<IServiceDal, EfServiceDal>();
 builder.Services.AddScoped<IServicesService, ServiceManager>();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("HotelApiCors", opts =>

@@ -1,4 +1,6 @@
-﻿using HotelManagement.BusinessLayer.Abstract;
+﻿using AutoMapper;
+using HotelManagement.BusinessLayer.Abstract;
+using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,23 +12,26 @@ namespace HotelManagement.WebAPILayer.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
-
-        public RoomController(IRoomService roomService)
+        private readonly IMapper _mapper;
+        public RoomController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult RoomList()
         {
-            var values = _roomService.GetListBL();
+            var list = _roomService.GetListBL();
+            var values = _mapper.Map<List<ResultRoomDTO>>(list);
             return Ok(values);
         }
 
         [HttpPost]
-        public IActionResult InsertRoom(Room room)
+        public IActionResult InsertRoom(InsertRoomDTO dto)
         {
-            _roomService.InsertBL(room);
+            var values = _mapper.Map<Room>(dto);
+            _roomService.InsertBL(values);
             return Ok("Eklendi!");
         }
 
@@ -39,9 +44,10 @@ namespace HotelManagement.WebAPILayer.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateRoom(Room room)
+        public IActionResult UpdateRoom(UpdateRoomDTO dto)
         {
-            _roomService.UpdateBL(room);
+            var values = _mapper.Map<Room>(dto);
+            _roomService.UpdateBL(values);
             return Ok("Güncellendi");
         }
 

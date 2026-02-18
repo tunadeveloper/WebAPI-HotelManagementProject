@@ -24,4 +24,8 @@
     <Folder Include="Areas\Admin\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\APIConsume\HotelManagement.DataTransferObjectLayer\HotelManagement.DataTransferObjectLayer.csproj" />
+  </ItemGroup>
+
 </Project>
