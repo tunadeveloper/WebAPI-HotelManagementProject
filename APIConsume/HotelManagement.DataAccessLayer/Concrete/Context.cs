@@ -1,4 +1,4 @@
-﻿using HotelManagement.EntityLayer.Concrete;
+using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,5 +15,6 @@ namespace HotelManagement.DataAccessLayer.Concrete
         public DbSet<Service> Services { get; set; }
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Subscribe> Subscribes { get; set; }
+        public DbSet<About> Abouts { get; set; }
     }
 }

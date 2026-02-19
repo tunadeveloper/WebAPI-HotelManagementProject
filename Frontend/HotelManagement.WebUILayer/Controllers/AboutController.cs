@@ -1,10 +1,11 @@
-using HotelManagement.WebUILayer.Models;
+﻿using HotelManagement.DataTransferObjectLayer.DTOs.AboutDTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace HotelManagement.WebUILayer.Controllers
 {
-    public class HomeController : Controller
+    public class AboutController : Controller
     {
         public IActionResult Index()
         {

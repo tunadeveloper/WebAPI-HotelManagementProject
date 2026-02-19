@@ -47,11 +47,14 @@ namespace HotelManagement.WebAPILayer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(loginUserDTO?.Username);
-            var signInManager = HttpContext.RequestServices.GetRequiredService<SignInManager<AppUser>>();
-            var result = await signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
+            var user = await _userManager.FindByNameAsync(loginUserDTO.Username);
+            if (user == null)
+                return BadRequest("Kullanıcı adı veya şifre hatalı.");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
             if (!result.Succeeded)
                 return BadRequest("Kullanıcı adı veya şifre hatalı.");
+
             return Ok("Giriş başarılı");
         }
     }

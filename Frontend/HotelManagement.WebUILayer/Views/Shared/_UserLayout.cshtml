@@ -1,0 +1,16 @@
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="tr">
+@await Component.InvokeAsync("_UserLayoutHeadComponentPartial")
+<body>
+    @await Component.InvokeAsync("_UserLayoutHeaderComponentPartial")
+
+    @RenderBody()
+
+    @await Component.InvokeAsync("_UserLayoutFooterComponentPartial")
+    @await Component.InvokeAsync("_UserLayoutScriptComponentPartial")
+</body>
+</html>

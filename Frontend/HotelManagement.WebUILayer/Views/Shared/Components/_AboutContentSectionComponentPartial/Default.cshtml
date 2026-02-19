@@ -1,0 +1,18 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.AboutDTOs
+@model ResultAboutDTO
+<section class="about_history_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 d_flex align-items-center">
+                <div class="about_content ">
+                    <h2 class="title title_color">@Model.Title</h2>
+                    <p>@Model.Description</p>
+                    <a href="#" class="button_hover theme_btn_two">Özel Fiyat Teklifi Al</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <img class="img-fluid" src="@Model.ImageUrl" alt="Hakkımızda Görseli">
+            </div>
+        </div>
+    </div>
+</section>
