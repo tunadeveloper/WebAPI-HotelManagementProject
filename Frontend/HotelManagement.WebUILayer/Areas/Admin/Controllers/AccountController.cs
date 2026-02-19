@@ -1,4 +1,5 @@
 ﻿using Azure;
+using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.EntityLayer.Concrete;
 using Humanizer;
@@ -40,5 +41,25 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             return View(createNewUserDTO);
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(loginUserDTO);
+            StringContent content = new StringContent(jsonData, Encoding.UTF8 , "application/json");
+            var response = await client.PostAsync("http://localhost:5191/api/Account/Login", content);
+            if (response.IsSuccessStatusCode)
+            {
+                HttpContext.Session.SetString("Username", loginUserDTO.Username);
+                return RedirectToAction("Index", "Room", new { area = "Admin" });
+            }
+            ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalı");
+            return View(loginUserDTO);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
+﻿using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,10 +13,11 @@ namespace HotelManagement.WebAPILayer.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public AccountController(UserManager<AppUser> userManager)
+        private readonly SignInManager<AppUser> _signInManager;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
@@ -37,6 +39,20 @@ namespace HotelManagement.WebAPILayer.Controllers
                 return BadRequest(result.Errors.Select(x=>x.Description));
 
             return Ok("Kayıt Başarılı");
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _userManager.FindByNameAsync(loginUserDTO?.Username);
+            var signInManager = HttpContext.RequestServices.GetRequiredService<SignInManager<AppUser>>();
+            var result = await signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
+            if (!result.Succeeded)
+                return BadRequest("Kullanıcı adı veya şifre hatalı.");
+            return Ok("Giriş başarılı");
         }
     }
 }

@@ -27,8 +27,6 @@
                                     <img src="/src/assets/images/logos/logo.svg" alt="">
                                 </a>
                                 <p class="text-center">Kayıt Ol</p>
-                                <div asp-validation-summary="All" class="text-danger"></div>
-
                                 <form method="post" asp-action="Register" asp-controller="Account" asp-area="Admin">
                                     <div class="mb-3">
                                         <label class="form-label">Ad</label>
@@ -66,7 +64,7 @@
 
                                     <div class="d-flex align-items-center justify-content-center">
                                         <p class="fs-4 mb-0 fw-bold">Zaten hesabın var mı?</p>
-                                        <a class="text-primary fw-bold ms-2" href="/Login/Index">Giriş Yap</a>
+                                        <a class="text-primary fw-bold ms-2" href="/Admin/Account/Login">Giriş Yap</a>
                                     </div>
 
                                 </form>
