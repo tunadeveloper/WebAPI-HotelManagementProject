@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs;
@@ -26,6 +27,8 @@ namespace HotelManagement.WebAPILayer.Mapping
             CreateMap<InsertSubscribeDTO, Subscribe>().ReverseMap();
             CreateMap<UpdateSubscribeDTO, Subscribe>().ReverseMap();
             CreateMap<ResultSubscribeDTO, Subscribe>().ReverseMap();
+
+            CreateMap<CreateNewUserDTO, AppUser>().ReverseMap();
         }
     }
 }

@@ -3,6 +3,8 @@ using HotelManagement.BusinessLayer.Concrete;
 using HotelManagement.DataAccessLayer.Abstract;
 using HotelManagement.DataAccessLayer.Concrete;
 using HotelManagement.DataAccessLayer.EntityFramework;
+using HotelManagement.EntityLayer.Concrete;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,9 @@ builder.Services.AddScoped<IServiceDal, EfServiceDal>();
 builder.Services.AddScoped<IServicesService, ServiceManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddIdentity<AppUser, AppRole>()
+    .AddEntityFrameworkStores<Context>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddCors(opt =>
 {
@@ -42,6 +47,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("HotelApiCors");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -11,6 +11,5 @@ namespace HotelManagement.EntityLayer.Concrete
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string City { get; set; }
     }
 }
