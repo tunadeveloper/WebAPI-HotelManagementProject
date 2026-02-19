@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.WebUILayer.ViewComponents
 {
-    public class _HomeAccomodationSectionComponentPartial : ViewComponent
+    public class _RoomListSectionComponentPartial : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public _HomeAccomodationSectionComponentPartial(IHttpClientFactory httpClientFactory)
+        public _RoomListSectionComponentPartial(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -22,7 +22,7 @@ namespace HotelManagement.WebUILayer.ViewComponents
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
-                return View(values.Take(3).ToList());
+                return View(values);
             }
             return View(new List<ResultRoomDTO>());
         }

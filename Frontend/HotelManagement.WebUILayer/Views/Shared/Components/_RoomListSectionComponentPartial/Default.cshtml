@@ -1,0 +1,44 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs
+@model List<ResultRoomDTO>
+<link href="~/royal-master/css/room.css" rel="stylesheet" />
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_color">Konaklama Seçenekleri</h2>
+            <p>Ruhunu genç tutanların çağında yaşıyoruz. Hızla akıp giden hayatta konforlu bir mola verin.</p>
+        </div>
+        <div class="row">
+                @foreach (var room in Model)
+                {
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="room-card">
+                            <div class="room-img-wrap">
+                                <span class="room-badge">Oda @room.RoomNumber</span>
+                                @if (!string.IsNullOrEmpty(room.CoverImage))
+                                {
+                                    <img src="@room.CoverImage" alt="@room.Title">
+                                }
+                                else
+                                {
+                                    <img src="/royal-master/image/room1.jpg" alt="@room.Title">
+                                }
+                                <a href="#" class="btn theme_btn button_hover btn-rezerve">Rezerve Et</a>
+                            </div>
+                            <div class="room-body">
+                                <a href="#" class="room-title">@room.Title</a>
+                                <div class="room-price">@room.Price ₺ <small>/gece</small></div>
+                                <div class="room-features">
+                                    <span><i class="fa fa-bed" aria-hidden="true"></i> @(room.BedCount ?? "-")</span>
+                                    <span><i class="fa fa-bath" aria-hidden="true"></i> @(room.BathCount ?? "-")</span>
+                                </div>
+                                @if (!string.IsNullOrEmpty(room.Description))
+                                {
+                                    <p class="room-desc">@(room.Description.Length > 100 ? room.Description.Substring(0, 100) + "..." : room.Description)</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+        </div>
+    </div>
+</section>

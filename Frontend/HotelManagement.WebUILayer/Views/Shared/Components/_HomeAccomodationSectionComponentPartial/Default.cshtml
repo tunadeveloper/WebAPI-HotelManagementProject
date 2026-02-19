@@ -1,50 +1,44 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs
+@model List<ResultRoomDTO>
+<link href="~/royal-master/css/room.css" rel="stylesheet" />
 <section class="accomodation_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h2 class="title_color">Otel Konaklama</h2>
-            <p>Hepimiz ruhu genç olanların çağına aitiz. Hayatın son derece hızlı aktığı bu günlerde,</p>
+            <h2 class="title_color">Konaklama Seçenekleri</h2>
+            <p>Ruhunu genç tutanların çağında yaşıyoruz. Hızla akıp giden hayatta konforlu bir mola verin.</p>
         </div>
-        <div class="row mb_30">
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="image/room1.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Rezerve Et</a>
+        <div class="row">
+            @foreach (var room in Model)
+            {
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="room-card">
+                        <div class="room-img-wrap">
+                            <span class="room-badge">Oda @room.RoomNumber</span>
+                            @if (!string.IsNullOrEmpty(room.CoverImage))
+                            {
+                                <img src="@room.CoverImage" alt="@room.Title">
+                            }
+                            else
+                            {
+                                <img src="/royal-master/image/room1.jpg" alt="@room.Title">
+                            }
+                            <a href="#" class="btn theme_btn button_hover btn-rezerve">Rezerve Et</a>
+                        </div>
+                        <div class="room-body">
+                            <a href="#" class="room-title">@room.Title</a>
+                            <div class="room-price">@room.Price ₺ <small>/gece</small></div>
+                            <div class="room-features">
+                                <span><i class="fa fa-bed" aria-hidden="true"></i> @(room.BedCount ?? "-")</span>
+                                <span><i class="fa fa-bath" aria-hidden="true"></i> @(room.BathCount ?? "-")</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(room.Description))
+                            {
+                                <p class="room-desc">@(room.Description.Length > 100 ? room.Description.Substring(0, 100) + "..." : room.Description)</p>
+                            }
+                        </div>
                     </div>
-                    <a href="#"><h4 class="sec_h4">Çift Kişilik Deluxe Oda</h4></a>
-                    <h5>$250<small>/gece</small></h5>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="image/room2.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Rezerve Et</a>
-                    </div>
-                    <a href="#"><h4 class="sec_h4">Tek Kişilik Deluxe Oda</h4></a>
-                    <h5>$200<small>/gece</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="image/room3.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Rezerve Et</a>
-                    </div>
-                    <a href="#"><h4 class="sec_h4">Balayı Süiti</h4></a>
-                    <h5>$750<small>/gece</small></h5>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="accomodation_item text-center">
-                    <div class="hotel_img">
-                        <img src="image/room4.jpg" alt="">
-                        <a href="#" class="btn theme_btn button_hover">Rezerve Et</a>
-                    </div>
-                    <a href="#"><h4 class="sec_h4">Ekonomik Çift Kişilik</h4></a>
-                    <h5>$200<small>/gece</small></h5>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>

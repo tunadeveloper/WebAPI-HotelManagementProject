@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 
-namespace HotelManagement.WebUILayer.ViewComponents
+namespace HotelManagement.WebUILayer.Controllers
 {
-    public class _HomeAccomodationSectionComponentPartial : ViewComponent
+    public class RoomController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public _HomeAccomodationSectionComponentPartial(IHttpClientFactory httpClientFactory)
+        public RoomController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Room");
@@ -22,7 +22,7 @@ namespace HotelManagement.WebUILayer.ViewComponents
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
-                return View(values.Take(3).ToList());
+                return View(values);
             }
             return View(new List<ResultRoomDTO>());
         }
