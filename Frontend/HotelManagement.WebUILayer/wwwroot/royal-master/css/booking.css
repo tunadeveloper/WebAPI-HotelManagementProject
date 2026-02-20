@@ -1,0 +1,159 @@
+
+.booking-modern {
+    --booking-radius: 16px;
+    --booking-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    --booking-shadow-hover: 0 20px 60px rgba(0,0,0,0.1);
+    --booking-accent: #c9a227;
+    --booking-accent-hover: #b8921f;
+    --booking-border: #e8e8e8;
+    --booking-bg: #fafbfc;
+}
+
+.booking-modern .booking-hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 9rem 0 3.5rem;
+    text-align: center;
+    color: #fff;
+}
+
+    .booking-modern .booking-hero h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+    }
+
+    .booking-modern .booking-hero p {
+        opacity: 0.85;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+.booking-modern .booking-section {
+    padding: 3.5rem 0;
+    background: var(--booking-bg);
+}
+
+.booking-modern .booking-card {
+    background: #fff;
+    border-radius: var(--booking-radius);
+    box-shadow: var(--booking-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+    .booking-modern .booking-card:hover {
+        box-shadow: var(--booking-shadow-hover);
+    }
+
+.booking-modern .booking-card-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 1.5rem 2rem;
+    font-weight: 600;
+    font-size: 1.15rem;
+}
+
+.booking-modern .booking-card-body {
+    padding: 2rem 2rem 2.5rem;
+}
+
+.booking-modern .form-label {
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.booking-modern .form-control,
+.booking-modern .form-select {
+    border: 1.5px solid var(--booking-border);
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    height: 2.75rem;
+    line-height: 1.4;
+}
+
+.booking-modern select.form-control,
+.booking-modern select.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.25rem;
+}
+
+.booking-modern .form-control:focus,
+.booking-modern .form-select:focus {
+    border-color: var(--booking-accent);
+    box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+    outline: none;
+}
+
+.booking-modern .form-control::placeholder {
+    color: #aaa;
+}
+
+.booking-modern textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+    height: auto;
+}
+
+.booking-modern .booking-img-wrap {
+    border-radius: var(--booking-radius);
+    overflow: hidden;
+    box-shadow: var(--booking-shadow);
+    height: 100%;
+    min-height: 420px;
+}
+
+    .booking-modern .booking-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.booking-modern .btn-booking {
+    background: linear-gradient(135deg, var(--booking-accent) 0%, var(--booking-accent-hover) 100%);
+    color: #fff;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .booking-modern .btn-booking:hover {
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(201, 162, 39, 0.35);
+    }
+
+.booking-modern .btn-outline-booking {
+    border: 2px solid var(--booking-border);
+    color: #555;
+    padding: 0.85rem 2rem;
+    font-weight: 600;
+    border-radius: 10px;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+    .booking-modern .btn-outline-booking:hover {
+        border-color: var(--booking-accent);
+        color: var(--booking-accent);
+    }
+
+.booking-modern .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.booking-modern .booking-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--booking-border);
+}

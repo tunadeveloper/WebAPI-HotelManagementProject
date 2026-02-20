@@ -25,6 +25,8 @@ builder.Services.AddScoped<IServiceDal, EfServiceDal>();
 builder.Services.AddScoped<IServicesService, ServiceManager>();
 builder.Services.AddScoped<IAboutDal, EfAboutDal>();
 builder.Services.AddScoped<IAboutService, AboutManager>();
+builder.Services.AddScoped<IBookingDal, EfBookingDal>();
+builder.Services.AddScoped<IBookingService, BookingManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()

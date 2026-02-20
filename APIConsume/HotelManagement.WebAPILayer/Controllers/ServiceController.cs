@@ -1,6 +1,7 @@
+using AutoMapper;
 using HotelManagement.BusinessLayer.Abstract;
+using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs;
 using HotelManagement.EntityLayer.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagement.WebAPILayer.Controllers
@@ -10,46 +11,52 @@ namespace HotelManagement.WebAPILayer.Controllers
     public class ServiceController : ControllerBase
     {
         private readonly IServicesService _servicesService;
+        private readonly IMapper _mapper;
 
-        public ServiceController(IServicesService servicesService)
+        public ServiceController(IServicesService servicesService, IMapper mapper)
         {
             _servicesService = servicesService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult ServiceList()
         {
-            var values = _servicesService.GetListBL();
+            var list = _servicesService.GetListBL();
+            var values = _mapper.Map<List<ResultServiceDTO>>(list);
             return Ok(values);
         }
 
         [HttpPost]
-        public IActionResult InsertService(Service service)
+        public IActionResult InsertService(InsertServiceDTO dto)
         {
-            _servicesService.InsertBL(service);
+            var entity = _mapper.Map<Service>(dto);
+            _servicesService.InsertBL(entity);
             return Ok("Eklendi!");
         }
 
         [HttpDelete]
         public IActionResult DeleteService(int serviceId)
         {
-            var values = _servicesService.GetByIdBL(serviceId);
-            _servicesService.DeleteBL(values);
+            var entity = _servicesService.GetByIdBL(serviceId);
+            _servicesService.DeleteBL(entity);
             return Ok("Silindi!");
         }
 
         [HttpPut]
-        public IActionResult UpdateService(Service service)
+        public IActionResult UpdateService(UpdateServiceDTO dto)
         {
-            _servicesService.UpdateBL(service);
+            var entity = _mapper.Map<Service>(dto);
+            _servicesService.UpdateBL(entity);
             return Ok("Güncellendi");
         }
 
         [HttpGet("GetById")]
         public IActionResult GetService(int serviceId)
         {
-            var values = _servicesService.GetByIdBL(serviceId);
-            return Ok(values);
+            var entity = _servicesService.GetByIdBL(serviceId);
+            var value = _mapper.Map<ResultServiceDTO>(entity);
+            return Ok(value);
         }
     }
 }

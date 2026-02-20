@@ -1,0 +1,114 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.BookingDTOs
+@model InsertBookingDTO
+@{
+    ViewData["Title"] = "Rezervasyon";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href="~/royal-master/css/booking.css" rel="stylesheet" />
+
+<section class="booking-modern">
+    <div class="booking-hero">
+        <div class="container">
+            <h1>Rezervasyon</h1>
+            <p>Konforlu konaklamanız için talebinizi iletin</p>
+        </div>
+    </div>
+
+    <div class="booking-section">
+        <div class="container">
+            <div class="row align-items-stretch g-4">
+                <div class="col-lg-5 d-none d-lg-block">
+                    <div class="booking-img-wrap">
+                        <img src="/royal-master/image/about_bg.jpg" alt="Rezervasyon">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="booking-card">
+                        <div class="booking-card-header">Rezervasyon Formu</div>
+                        <div class="booking-card-body">
+                            <form method="post" asp-action="Index" asp-controller="Booking">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="NameSurname" class="form-label">Ad Soyad <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="NameSurname" name="NameSurname" placeholder="Adınız Soyadınız" required value="@Model?.NameSurname">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Email" class="form-label">E-posta <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="Email" name="Email" placeholder="ornek@email.com" required value="@Model?.Email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="CheckIn" class="form-label">Giriş Tarihi ve Saati <span class="text-danger">*</span></label>
+                                            <input type="datetime-local" class="form-control" id="CheckIn" name="CheckIn" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="CheckOut" class="form-label">Çıkış Tarihi ve Saati <span class="text-danger">*</span></label>
+                                            <input type="datetime-local" class="form-control" id="CheckOut" name="CheckOut" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="AdultCount" class="form-label">Yetişkin Sayısı</label>
+                                            <select class="form-control form-select" id="AdultCount" name="AdultCount">
+                                                <option value="1" selected>1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="ChildCount" class="form-label">Çocuk Sayısı</label>
+                                            <select class="form-control form-select" id="ChildCount" name="ChildCount">
+                                                <option value="0" selected>0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="RoomCount" class="form-label">Oda Sayısı</label>
+                                            <select class="form-control form-select" id="RoomCount" name="RoomCount">
+                                                <option value="1" selected>1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="form-group">
+                                    <label for="SpecialRequest" class="form-label">Özel İstek</label>
+                                    <textarea class="form-control" id="SpecialRequest" name="SpecialRequest" rows="4" placeholder="Varsa özel isteklerinizi yazabilirsiniz..."></textarea>
+                                </div>
+                                <div class="booking-actions d-flex flex-wrap justify-content-center gap-3">
+                                    <button type="submit" class="btn btn-booking">Rezervasyon Talebi Gönder</button>
+                                    <a href="/Home/Index" class="btn btn-outline-booking">İptal</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
