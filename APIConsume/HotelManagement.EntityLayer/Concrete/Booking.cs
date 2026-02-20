@@ -9,7 +9,7 @@ namespace HotelManagement.EntityLayer.Concrete
         public int AdultCount { get; set; }
         public int ChildCount { get; set; }
         public int RoomCount { get; set; }
-        public string SpecialRequest { get; set; }
+        public string? SpecialRequest { get; set; }
         public string Status { get; set; }
     }
 }

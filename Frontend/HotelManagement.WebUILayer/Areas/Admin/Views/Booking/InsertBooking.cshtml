@@ -1,0 +1,58 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.BookingDTOs
+@model InsertBookingDTO
+@{
+    ViewData["Title"] = "Rezervasyon Ekle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Rezervasyon Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertBooking" asp-area="Admin">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="NameSurname" class="form-label">Ad Soyad</label>
+                            <input type="text" class="form-control" id="NameSurname" name="NameSurname" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="Email" class="form-label">E-posta</label>
+                            <input type="email" class="form-control" id="Email" name="Email" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="CheckIn" class="form-label">Giriş Tarihi</label>
+                            <input type="date" class="form-control" id="CheckIn" name="CheckIn" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="CheckOut" class="form-label">Çıkış Tarihi</label>
+                            <input type="date" class="form-control" id="CheckOut" name="CheckOut" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="AdultCount" class="form-label">Yetişkin Sayısı</label>
+                            <input type="number" class="form-control" id="AdultCount" name="AdultCount" min="0" value="1">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="ChildCount" class="form-label">Çocuk Sayısı</label>
+                            <input type="number" class="form-control" id="ChildCount" name="ChildCount" min="0" value="0">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="RoomCount" class="form-label">Oda Sayısı</label>
+                            <input type="number" class="form-control" id="RoomCount" name="RoomCount" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="SpecialRequest" class="form-label">Özel İstek</label>
+                        <textarea class="form-control" id="SpecialRequest" name="SpecialRequest" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/Booking/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

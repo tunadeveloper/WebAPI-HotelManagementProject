@@ -1,0 +1,56 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.BookingDTOs
+@model List<ResultBookingDTO>
+@{
+    ViewData["Title"] = "Rezervasyon Listesi";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100">
+        <div class="card-body p-4">
+            <div class="d-flex mb-4 justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Rezervasyon Listesi</h5>
+            </div>
+
+            <div class="table-responsive" data-simplebar>
+                <table class="table table-borderless align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ad Soyad</th>
+                            <th scope="col">E-posta</th>
+                            <th scope="col">Giriş</th>
+                            <th scope="col">Çıkış</th>
+                            <th scope="col">Yetişkin</th>
+                            <th scope="col">Çocuk</th>
+                            <th scope="col">Oda</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><span class="fs-3 fw-normal">@item.Id</span></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.NameSurname</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.Email</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.CheckIn.ToString("dd.MM.yyyy")</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.CheckOut.ToString("dd.MM.yyyy")</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.AdultCount</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.ChildCount</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@item.RoomCount</p></td>
+                                    <td><span class="badge bg-@(item.Status == "Onaylandı" ? "success" : item.Status == "İptal" ? "danger" : "warning")">@item.Status</span></td>
+                                    <td>
+                                        <a href="/Admin/Booking/DeleteBooking/@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                                        <a href="/Admin/Booking/UpdateBooking/@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                                    </td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+            <a href="/Admin/Booking/InsertBooking" class="btn btn-success">Yeni Rezervasyon</a>
+        </div>
+    </div>
+</div>
