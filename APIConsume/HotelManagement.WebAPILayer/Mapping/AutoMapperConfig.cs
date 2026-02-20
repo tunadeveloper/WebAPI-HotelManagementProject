@@ -1,7 +1,9 @@
 using AutoMapper;
 using HotelManagement.DataTransferObjectLayer.DTOs.AboutDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.BookingDTOs;
+using HotelManagement.DataTransferObjectLayer.DTOs.ContactDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs;
@@ -38,6 +40,14 @@ namespace HotelManagement.WebAPILayer.Mapping
             CreateMap<InsertBookingDTO, Booking>().ReverseMap();
             CreateMap<UpdateBookingDTO, Booking>().ReverseMap();
             CreateMap<ResultBookingDTO, Booking>().ReverseMap();
+
+            CreateMap<InsertContactDTO, Contact>().ReverseMap();
+            CreateMap<UpdateContactDTO, Contact>().ReverseMap();
+            CreateMap<ResultContactDTO, Contact>().ReverseMap();
+
+            CreateMap<InsertMessageDTO, Message>().ReverseMap();
+            CreateMap<UpdateMessageDTO, Message>().ReverseMap();
+            CreateMap<ResultMessageDTO, Message>().ReverseMap();
 
             CreateMap<CreateNewUserDTO, AppUser>().ReverseMap();
             CreateMap<LoginUserDTO, AppUser>().ReverseMap();
