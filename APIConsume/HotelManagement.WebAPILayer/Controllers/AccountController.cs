@@ -71,5 +71,13 @@ namespace HotelManagement.WebAPILayer.Controllers
 
             return Ok(new TokenResponseDTO { Token = token });
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var entity = _userManager.Users.FirstOrDefault(x=>x.Id == id);
+            await _userManager.DeleteAsync(entity);
+            return Ok("Silindi");
+        }
     }
 }

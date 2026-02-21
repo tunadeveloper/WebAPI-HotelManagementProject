@@ -36,6 +36,8 @@ builder.Services.AddScoped<IMessageDal, EfMessageDal>();
 builder.Services.AddScoped<IMessageService, MessageManager>();
 builder.Services.AddScoped<ISendMessageDal, EfSendMessageDal>();
 builder.Services.AddScoped<ISendMessageService, SendMessageManager>();
+builder.Services.AddScoped<IWorkLocationDal, EfWorkLocationDal>();
+builder.Services.AddScoped<IWorkLocationService, WorkLocationManager>();
 builder.Services.AddScoped<IEmailService, SmtpEmailManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));

@@ -11,6 +11,7 @@ using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.TestimonialDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
 using HotelManagement.EntityLayer.Concrete;
 
 namespace HotelManagement.WebAPILayer.Mapping
@@ -58,6 +59,10 @@ namespace HotelManagement.WebAPILayer.Mapping
             CreateMap<CreateNewUserDTO, AppUser>().ReverseMap();
             CreateMap<LoginUserDTO, AppUser>().ReverseMap();
             CreateMap<ResultUserDTO, AppUser>().ReverseMap();
+
+            CreateMap<InsertWorkLocationDTO, WorkLocation>().ReverseMap();
+            CreateMap<UpdateWorkLocationDTO, WorkLocation>().ReverseMap();
+            CreateMap<ResultWorkLocationDTO, WorkLocation>().ReverseMap();
         }
     }
 }
