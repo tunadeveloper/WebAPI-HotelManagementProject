@@ -63,11 +63,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
                 var identity = new ClaimsIdentity("CookieAuth");
                 identity.AddClaim(new Claim(ClaimTypes.Name, loginUserDTO.Username));
                 var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync("CookieAuth", principal, new AuthenticationProperties
-                {
-                    IsPersistent = false,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1)
-                });
+                await HttpContext.SignInAsync("CookieAuth", principal, new AuthenticationProperties{ IsPersistent = false});
 
                 return RedirectToAction("Index", "Room", new { area = "Admin" });
             }
