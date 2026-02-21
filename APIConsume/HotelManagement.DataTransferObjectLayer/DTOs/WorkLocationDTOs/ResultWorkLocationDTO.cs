@@ -1,3 +1,5 @@
+using HotelManagement.EntityLayer.Concrete;
+
 namespace HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs
 {
     public class ResultWorkLocationDTO
