@@ -7,10 +7,11 @@ namespace HotelManagement.BusinessLayer.Concrete
     public class SendMessageManager : ISendMessageService
     {
         private readonly ISendMessageDal _sendMessageDal;
-
-        public SendMessageManager(ISendMessageDal sendMessageDal)
+        private readonly IEmailService _emailService;
+        public SendMessageManager(ISendMessageDal sendMessageDal, IEmailService emailService)
         {
             _sendMessageDal = sendMessageDal;
+            _emailService = emailService;
         }
 
         public void DeleteBL(SendMessage entity)
@@ -31,6 +32,7 @@ namespace HotelManagement.BusinessLayer.Concrete
         public void InsertBL(SendMessage entity)
         {
             _sendMessageDal.Insert(entity);
+            _emailService.SendEmail(entity.ReceiverEmail, entity.Subject, entity.Content);
         }
 
         public void UpdateBL(SendMessage entity)

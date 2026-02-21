@@ -1,8 +1,67 @@
-﻿
+@using HotelManagement.DataTransferObjectLayer.DTOs.SendMessageDTOs
+@model InsertSendMessageDTO
 @{
-    ViewData["Title"] = "CreateMessage";
+    ViewData["Title"] = "Yeni Mesaj";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<h1>CreateMessage</h1>
+<div class="mb-3">
+    <h4 class="fs-6 mb-0">Mesajlar</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/Admin/Message/Inbox">Mesajlar</a></li>
+            <li class="breadcrumb-item active">Yeni Mesaj</li>
+        </ol>
+    </nav>
+</div>
 
+<div class="card">
+    <div class="card-body p-0">
+        <div class="row g-0">
+            <div class="col-md-3 border-end">
+                <div class="p-3">
+                    <a href="/Admin/Message/CreateMessage" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="ti ti-edit fs-5"></i>
+                        <span>Yeni Mesaj</span>
+                    </a>
+                    <a href="/Admin/Message/Inbox" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light">
+                        <i class="ti ti-inbox fs-5"></i>
+                        <span>Gelen Kutusu</span>
+                    </a>
+                    <a href="/Admin/Message/Sendbox" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light">
+                        <i class="ti ti-send fs-5"></i>
+                        <span>Giden Kutusu</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="p-4">
+                    <h5 class="mb-4">Yeni Mesaj Gönder</h5>
+                    <form asp-action="CreateMessage" method="post">
+                        <div class="mb-3">
+                            <label asp-for="ReceiverEmail" class="form-label">Alıcı E-posta</label>
+                            <input name="ReceiverEmail" type="email" class="form-control" placeholder="ornek@email.com" />
+                            <span asp-validation-for="ReceiverEmail" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Subject" class="form-label">Konu</label>
+                            <input name="Subject" type="text" class="form-control" placeholder="Mesaj konusu" />
+                            <span asp-validation-for="Subject" class="text-danger small"></span>
+                        </div>
+                        <div class="mb-4">
+                            <label asp-for="Content" class="form-label">Mesaj</label>
+                            <textarea name="Content" class="form-control" rows="8" placeholder="Mesajınızı yazın..."></textarea>
+                            <span asp-validation-for="Content" class="text-danger small"></span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="ti ti-send me-1"></i> Gönder
+                            </button>
+                            <a href="/Admin/Message/Inbox" class="btn btn-outline-secondary">İptal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

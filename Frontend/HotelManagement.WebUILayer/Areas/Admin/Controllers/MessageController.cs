@@ -30,13 +30,22 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> DeleteMessage(int id)
+        public async Task<IActionResult> DeleteInboxMessage(int id)
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.DeleteAsync($"http://localhost:5191/api/Message/{id}");
             if (responseMessage.IsSuccessStatusCode)
                 return RedirectToAction("Inbox", "Message", new { area = "Admin" });
             return RedirectToAction("Inbox", "Message", new { area = "Admin" });
+        }
+
+        public async Task<IActionResult> DeleteSendboxMessage(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.DeleteAsync($"http://localhost:5191/api/SendMessage/{id}");
+            if (responseMessage.IsSuccessStatusCode)
+                return RedirectToAction("Sendbox", "Message", new { area = "Admin" });
+            return RedirectToAction("Sendbox", "Message", new { area = "Admin" });
         }
 
         public async Task<IActionResult> Sendbox()
@@ -52,13 +61,13 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult CreateMessage() => View();
+        public IActionResult CreateMessage() => View(new InsertSendMessageDTO());
         [HttpPost]
         public async Task<IActionResult> CreateMessage(InsertSendMessageDTO dto)
         {
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(dto);
-            var responseMessage = await client.PostAsync("http://localhost:5191/api/Message/", new StringContent(jsonData, Encoding.UTF8, "application/json"));
+            var responseMessage = await client.PostAsync("http://localhost:5191/api/SendMessage/", new StringContent(jsonData, Encoding.UTF8, "application/json"));
             return RedirectToAction("Sendbox", "Message", new { area = "Admin" });
         }
     }

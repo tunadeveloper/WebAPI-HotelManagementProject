@@ -31,10 +31,6 @@
                         <i class="ti ti-send fs-5"></i>
                         <span>Giden Kutusu</span>
                     </a>
-                    <a href="/Admin/Message/Bin" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light">
-                        <i class="ti ti-trash fs-5"></i>
-                        <span>Çöp Kutusu</span>
-                    </a>
                 </div>
             </div>
             <div class="col-md-9 d-flex flex-column" style="min-height: 0;">
@@ -56,13 +52,13 @@
                                             <td>@item.NameSurname</td>
                                             <td>
                                                 <a href="javascript:void(0)" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#msgModal_@item.Id">
-                                                    @(item.Subject.Length > 50 ? item.Subject.Substring(0, 50) + "..." : item.Subject))
+                                                    @(item.Subject.Length > 50 ? item.Subject.Substring(0, 50) + "..." : item.Subject)
                                                 </a>
                                             </td>
                                             <td class="text-muted small">@item.CreatedAt.ToString("dd.MMM.yyyy HH:mm")</td>
                                             <td class="text-end">
                                             <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#msgModal_@item.Id">Mesajı Oku</button>
-                                            <a href="/Admin/Message/DeleteSendMessage/@item.Id" class="btn btn-sm btn-outline-danger">Sil</a>
+                                            <a href="/Admin/Message/DeleteInboxMessage/@item.Id" class="btn btn-sm btn-outline-danger">Sil</a>
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="msgModal_@item.Id" tabindex="-1">
@@ -80,6 +76,7 @@
                                                         <div style="white-space: pre-wrap;">@item.MessageContent</div>
                                                     </div>
                                                     <div class="modal-footer">
+                                                    <a href="/Admin/Message/DeleteSendboxMessage/@item.Id" class="btn btn-danger">Sil</a>
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
                                                     </div>
                                                 </div>

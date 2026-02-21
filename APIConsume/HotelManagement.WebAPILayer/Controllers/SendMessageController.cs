@@ -32,7 +32,6 @@ namespace HotelManagement.WebAPILayer.Controllers
         {
             var entity = _mapper.Map<SendMessage>(dto);
             entity.CreatedAt = DateTime.UtcNow;
-            entity.Status = false;
             _sendMessageService.InsertBL(entity);
             return Ok("Eklendi!");
         }
