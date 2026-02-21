@@ -1,6 +1,8 @@
+using AutoMapper;
 using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.TokenDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,12 +17,22 @@ namespace HotelManagement.WebAPILayer.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configration;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configration = configration;
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            var list = _userManager.Users.ToList();
+            var values = _mapper.Map<List<ResultUserDTO>>(list);
+            return Ok(values);
         }
 
         [HttpPost]

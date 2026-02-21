@@ -1,0 +1,68 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO
+@model List<ResultUserDTO>
+@{
+    ViewData["Title"] = "Kullanıcı Listesi";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="mb-3">
+    <h4 class="fs-6 mb-0">Kullanıcılar</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/Admin/Dashboard/Index">Ana Sayfa</a></li>
+            <li class="breadcrumb-item active">Kullanıcı Listesi</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="col-lg-12 d-flex align-items-stretch">
+    <div class="card w-100">
+        <div class="card-body p-4">
+            <div class="d-flex mb-4 justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">Kullanıcı Listesi</h5>
+                <a href="/Admin/User/InsertUser" class="btn btn-success">Yeni Kullanıcı</a>
+            </div>
+
+            <div class="table-responsive" data-simplebar>
+                <table class="table table-borderless align-middle text-nowrap">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ad</th>
+                            <th scope="col">Soyad</th>
+                            <th scope="col">Kullanıcı Adı</th>
+                            <th scope="col">E-posta</th>
+                            <th scope="col">E-posta Onaylı</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><span class="fs-3 fw-normal">@item.id</span></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@(item.name ?? "-")</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@(item.surname ?? "-")</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@(item.userName ?? "-")</p></td>
+                                    <td><p class="fs-3 fw-normal mb-0">@(item.email ?? "-")</p></td>
+                                    <td>
+                                        @if (item.emailConfirmed)
+                                        {
+                                            <span class="badge bg-success">Evet</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Hayır</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="/Admin/User/DeleteUser/@item.id" class="btn btn-danger btn-sm" onclick="return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');">Sil</a>
+                                    </td>
+                                </tr>
+                            }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
