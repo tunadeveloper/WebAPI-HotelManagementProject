@@ -1,5 +1,6 @@
-﻿using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.TokenDTO;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,10 +15,12 @@ namespace HotelManagement.WebAPILayer.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IConfiguration _configration;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _configration = configration;
         }
 
         [HttpPost]
@@ -44,9 +47,6 @@ namespace HotelManagement.WebAPILayer.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var user = await _userManager.FindByNameAsync(loginUserDTO.Username);
             if (user == null)
                 return BadRequest("Kullanıcı adı veya şifre hatalı.");
@@ -55,7 +55,9 @@ namespace HotelManagement.WebAPILayer.Controllers
             if (!result.Succeeded)
                 return BadRequest("Kullanıcı adı veya şifre hatalı.");
 
-            return Ok("Giriş başarılı");
+            var token = TokenGenerator.GeneratorToken(user, _configration);
+
+            return Ok(new TokenResponseDTO { Token = token });
         }
     }
 }

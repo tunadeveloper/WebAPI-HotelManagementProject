@@ -20,7 +20,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("apiClient");
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Room");
             if (responseMessage.IsSuccessStatusCode)
             {

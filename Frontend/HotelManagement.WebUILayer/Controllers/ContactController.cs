@@ -1,6 +1,7 @@
 using HotelManagement.BusinessLayer.FluentValidation.MessageDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.ContactDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.WebUILayer.Controllers
 {
+    [AllowAnonymous]
     public class ContactController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -20,7 +22,7 @@ namespace HotelManagement.WebUILayer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("apiClient");
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Contact");
             if (responseMessage.IsSuccessStatusCode)
             {

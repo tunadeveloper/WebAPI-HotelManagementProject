@@ -1,4 +1,5 @@
 using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotelManagement.WebUILayer.Controllers
 {
+    [AllowAnonymous]
     public class SubscribeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
