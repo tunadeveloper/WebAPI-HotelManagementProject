@@ -1,23 +1,32 @@
-@using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs
+﻿@using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs
 @model InsertMessageDTO
-<form class="row contact_form" asp-controller="Contact" asp-action="SendMessage" method="post" id="contactForm" novalidate="novalidate">
+
+<form asp-action="SendMessage" asp-controller="Contact" method="post" class="row contact_form">
     <div class="col-md-6">
         <div class="form-group">
-            <input type="text" class="form-control" id="NameSurname" name="NameSurname" placeholder="Adınızı giriniz">
+            <input asp-for="NameSurname" class="form-control" placeholder="Adınızı giriniz" />
+            <span asp-validation-for="NameSurname" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-            <input type="email" class="form-control" id="Email" name="Email" placeholder="E-posta adresinizi giriniz">
+            <input asp-for="Email" class="form-control" placeholder="E-posta adresinizi giriniz" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
+
         <div class="form-group">
-            <input type="text" class="form-control" id="Subject" name="Subject" placeholder="Konu giriniz">
+            <input asp-for="Subject" class="form-control" placeholder="Konu giriniz" />
+            <span asp-validation-for="Subject" class="text-danger"></span>
         </div>
     </div>
+
     <div class="col-md-6">
         <div class="form-group">
-            <textarea class="form-control" name="MessageContent" id="MessageContent" rows="1" placeholder="Mesajınızı giriniz"></textarea>
+            <textarea asp-for="MessageContent" class="form-control" placeholder="Mesajınızı giriniz"></textarea>
+            <span asp-validation-for="MessageContent" class="text-danger"></span>
         </div>
     </div>
+
     <div class="col-md-12 text-right">
-        <button type="submit" value="submit" class="btn theme_btn button_hover">Mesaj Gönder</button>
+        <button type="submit" class="btn theme_btn button_hover">Mesaj Gönder</button>
     </div>
 </form>

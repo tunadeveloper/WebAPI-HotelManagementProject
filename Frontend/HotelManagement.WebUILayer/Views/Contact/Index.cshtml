@@ -1,4 +1,5 @@
 @using HotelManagement.DataTransferObjectLayer.DTOs.ContactDTOs
+@using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs
 @model ResultContactDTO
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +20,7 @@
 </section>
 <section class="contact_area section_gap">
     <div class="container">
-        @if (!string.IsNullOrEmpty(Model?.MapUrl))
+        @if (!string.IsNullOrEmpty(Model.MapUrl))
         {
             <div class="mapBox overflow-hidden" style="height:400px;">
                 <iframe src="@Model.MapUrl" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -31,16 +32,16 @@
                     <div class="info_item">
                         <i class="lnr lnr-home"></i>
                         <h6>Adres</h6>
-                        <p>@(Model?.Address ?? "—")</p>
+                        <p>@Model.Address</p>
                     </div>
                     <div class="info_item">
                         <i class="lnr lnr-phone-handset"></i>
-                        <h6><a href="tel:@Model?.PhoneNumber">@(Model?.PhoneNumber ?? "Telefon")</a></h6>
+                        <h6><a href="tel:@Model?.PhoneNumber">@Model.PhoneNumber</a></h6>
                         <p>Pzt - Cum, 09:00 - 18:00</p>
                     </div>
                     <div class="info_item">
                         <i class="lnr lnr-envelope"></i>
-                        <h6><a href="mailto:@Model?.Email">@(Model?.Email ?? "E-posta")</a></h6>
+                        <h6><a href="mailto:@Model?.Email">@Model.Email</a></h6>
                         <p>Sorularınızı istediğiniz zaman gönderebilirsiniz!</p>
                     </div>
                 </div>

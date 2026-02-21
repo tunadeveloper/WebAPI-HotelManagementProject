@@ -5,9 +5,9 @@ namespace HotelManagement.WebUILayer.ViewComponents
 {
     public class _ContactMessageFormComponentPartial : ViewComponent
     {
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(InsertMessageDTO model = null)
         {
-            return View(new InsertMessageDTO());
+            return View(model ?? new InsertMessageDTO());
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.24">
       <PrivateAssets>all</PrivateAssets>
@@ -21,7 +24,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotelManagement.DataAccessLayer\HotelManagement.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\HotelManagement.DataTransferObjectLayer\HotelManagement.DataTransferObjectLayer.csproj" />
     <ProjectReference Include="..\HotelManagement.EntityLayer\HotelManagement.EntityLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FluentValidation\About\" />
+    <Folder Include="FluentValidation\Booking\" />
+    <Folder Include="FluentValidation\Contact\" />
+    <Folder Include="FluentValidation\Message\" />
+    <Folder Include="FluentValidation\Subscribe\" />
+    <Folder Include="FluentValidation\Service\" />
+    <Folder Include="FluentValidation\Testimonial\" />
+    <Folder Include="FluentValidation\Room\" />
   </ItemGroup>
 
 </Project>

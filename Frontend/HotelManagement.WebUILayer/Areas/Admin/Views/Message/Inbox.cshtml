@@ -1,0 +1,96 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs
+@model List<ResultMessageDTO>
+@{
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="mb-3">
+    <h4 class="fs-6 mb-0">Mesajlar</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/Admin/Dashboard/Index">Gelen Mesajlar</a></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card" style="height: 600px;">
+    <div class="card-body p-0 h-100 d-flex flex-column">
+        <div class="row g-0 flex-grow-1" style="min-height: 0;">
+            <div class="col-md-3 border-end">
+                <div class="p-3">
+                    <a href="/Admin/Message/CreateMessage" class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <i class="ti ti-edit fs-5"></i>
+                        <span>Yeni Mesaj</span>
+                    </a>
+                    <a href="/Admin/Message/Inbox" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light bg-primary bg-opacity-10 text-primary">
+                        <i class="ti ti-inbox fs-5"></i>
+                        <span>Gelen Kutusu</span>
+                        
+                    </a>
+                    <a href="/Admin/Message/Sendbox" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light">
+                        <i class="ti ti-send fs-5"></i>
+                        <span>Giden Kutusu</span>
+                    </a>
+                    <a href="/Admin/Message/Bin" class="d-flex align-items-center gap-2 py-2 px-3 rounded-2 text-dark text-decoration-none bg-hover-light">
+                        <i class="ti ti-trash fs-5"></i>
+                        <span>Çöp Kutusu</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-9 d-flex flex-column" style="min-height: 0;">
+                <div class="p-4 flex-grow-1 overflow-auto" style="min-height: 0;">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Gönderen</th>
+                                        <th>Konu</th>
+                                        <th>Tarih</th>
+                                        <th class="text-end">İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.NameSurname</td>
+                                            <td>
+                                                <a href="javascript:void(0)" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#msgModal_@item.Id">
+                                                    @(item.Subject.Length > 50 ? item.Subject.Substring(0, 50) + "..." : item.Subject))
+                                                </a>
+                                            </td>
+                                            <td class="text-muted small">@item.CreatedAt.ToString("dd.MMM.yyyy HH:mm")</td>
+                                            <td class="text-end">
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#msgModal_@item.Id">Mesajı Oku</button>
+                                            <a href="/Admin/Message/DeleteSendMessage/@item.Id" class="btn btn-sm btn-outline-danger">Sil</a>
+                                            </td>
+                                        </tr>
+                                        <div class="modal fade" id="msgModal_@item.Id" tabindex="-1">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">@item.Subject</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="mb-1"><strong>Gönderen:</strong> @item.NameSurname</p>
+                                                        <p class="mb-1"><strong>E-posta:</strong> <a href="mailto:@item.Email">@item.Email</a></p>
+                                                        <p class="mb-3 text-muted small">@item.CreatedAt.ToString("dd.MMM.yyyy HH:mm")</p>
+                                                        <hr />
+                                                        <div style="white-space: pre-wrap;">@item.MessageContent</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

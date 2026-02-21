@@ -6,6 +6,7 @@ using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
+using HotelManagement.DataTransferObjectLayer.DTOs.SendMessageDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.ServiceDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.TestimonialDTOs;
@@ -48,6 +49,10 @@ namespace HotelManagement.WebAPILayer.Mapping
             CreateMap<InsertMessageDTO, Message>().ReverseMap();
             CreateMap<UpdateMessageDTO, Message>().ReverseMap();
             CreateMap<ResultMessageDTO, Message>().ReverseMap();
+
+            CreateMap<InsertSendMessageDTO, SendMessage>().ReverseMap();
+            CreateMap<UpdateSendMessageDTO, SendMessage>().ReverseMap();
+            CreateMap<ResultSendMessageDTO, SendMessage>().ReverseMap();
 
             CreateMap<CreateNewUserDTO, AppUser>().ReverseMap();
             CreateMap<LoginUserDTO, AppUser>().ReverseMap();

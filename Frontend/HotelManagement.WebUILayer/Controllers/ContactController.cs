@@ -1,6 +1,8 @@
+using HotelManagement.BusinessLayer.FluentValidation.MessageDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.ContactDTOs;
 using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,11 +34,11 @@ namespace HotelManagement.WebUILayer.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(InsertMessageDTO dto)
         {
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(dto);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("http://localhost:5191/api/Message", content);
-            return RedirectToAction("Index");
+                var client = _httpClientFactory.CreateClient();
+                var jsonData = JsonConvert.SerializeObject(dto);
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                var responseMessage = await client.PostAsync("http://localhost:5191/api/Message", content);
+                return RedirectToAction("Index");
         }
     }
 }

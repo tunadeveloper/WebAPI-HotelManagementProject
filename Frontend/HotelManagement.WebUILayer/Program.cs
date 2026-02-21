@@ -1,10 +1,16 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using HotelManagement.BusinessLayer.FluentValidation.MessageDTOs;
+using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs;
 using HotelManagement.EntityLayer.Concrete;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation();
 builder.Services.AddHttpClient();
+builder.Services.AddTransient<IValidator<InsertMessageDTO>, InsertMessageValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<InsertMessageValidator>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(opt =>
 {

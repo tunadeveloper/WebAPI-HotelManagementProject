@@ -31,6 +31,8 @@ builder.Services.AddScoped<IContactDal, EfContactDal>();
 builder.Services.AddScoped<IContactService, ContactManager>();
 builder.Services.AddScoped<IMessageDal, EfMessageDal>();
 builder.Services.AddScoped<IMessageService, MessageManager>();
+builder.Services.AddScoped<ISendMessageDal, EfSendMessageDal>();
+builder.Services.AddScoped<ISendMessageService, SendMessageManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddIdentity<AppUser, AppRole>()
