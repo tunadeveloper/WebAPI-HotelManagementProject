@@ -1,4 +1,5 @@
 using AutoMapper;
+using HotelManagement.BusinessLayer.Abstract;
 using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.TokenDTO;
@@ -7,6 +8,7 @@ using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace HotelManagement.WebAPILayer.Controllers
@@ -17,20 +19,22 @@ namespace HotelManagement.WebAPILayer.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IAppUserService _appUserService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configration;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper, IAppUserService appUserService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configration = configration;
             _mapper = mapper;
+            _appUserService = appUserService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUser()
         {
-            var list = _userManager.Users.ToList();
+            var list = _appUserService.UserListWithWorkLocationBL();
             var values = _mapper.Map<List<ResultUserDTO>>(list);
             return Ok(values);
         }
@@ -38,21 +42,14 @@ namespace HotelManagement.WebAPILayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(CreateNewUserDTO createNewUserDTO)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var appUser = new AppUser()
             {
                 Name = createNewUserDTO.Name,
                 Surname = createNewUserDTO.Surname,
                 Email = createNewUserDTO.Email,
-                UserName = createNewUserDTO.Username
+                UserName = createNewUserDTO.Username,
+                WorkLocationId = createNewUserDTO.WorkLocationId
             };
-
-            var result = await _userManager.CreateAsync(appUser, createNewUserDTO.Password);
-            if (!result.Succeeded)
-                return BadRequest(result.Errors.Select(x=>x.Description));
-
             return Ok("Kayıt Başarılı");
         }
 

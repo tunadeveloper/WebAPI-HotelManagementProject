@@ -21,7 +21,6 @@ namespace HotelManagement.DataTransferObjectLayer.DTOs.UserDTO
         public bool phoneNumberConfirmed { get; set; }
         public bool twoFactorEnabled { get; set; }
 
-        public List<ResultWorkLocationDTO> WorkLocationDTOs { get; set; }
-
+        public ResultWorkLocationDTO WorkLocation { get; set; }
     }
 }
