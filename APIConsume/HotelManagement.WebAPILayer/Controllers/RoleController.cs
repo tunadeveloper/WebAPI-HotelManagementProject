@@ -3,6 +3,7 @@ using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace HotelManagement.WebAPILayer.Controllers
 {
@@ -22,6 +23,18 @@ namespace HotelManagement.WebAPILayer.Controllers
         {
             var list = await _roleManager.Roles.ToListAsync();
             return Ok(list);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertRole(AppRole role)
+        {
+            var values = new AppRole()
+            {
+                Name = role.Name
+            };
+
+            var result = await _roleManager.CreateAsync(values);
+            return Ok("Eklendi: " + result);
         }
     }
 }
