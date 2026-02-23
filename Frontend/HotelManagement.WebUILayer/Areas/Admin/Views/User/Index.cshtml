@@ -22,6 +22,20 @@
                 <h5 class="mb-0 fw-bold">Kullanıcı Listesi</h5>
                 <a href="/Admin/User/InsertUser" class="btn btn-success">Yeni Kullanıcı</a>
             </div>
+            @if (TempData["EmailConfirmationSent"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["EmailConfirmationSent"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Kapat"></button>
+                </div>
+            }
+            @if (TempData["EmailConfirmationError"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["EmailConfirmationError"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Kapat"></button>
+                </div>
+            }
 
             <div class="table-responsive" data-simplebar>
                 <table class="table table-borderless align-middle text-nowrap">

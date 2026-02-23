@@ -8,6 +8,8 @@ using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HotelManagement.WebAPILayer.Controllers
@@ -21,13 +23,15 @@ namespace HotelManagement.WebAPILayer.Controllers
         private readonly IAppUserService _appUserService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configration;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper, IAppUserService appUserService, RoleManager<AppRole> roleManager)
+        private readonly IEmailService _emailService;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper, IAppUserService appUserService, RoleManager<AppRole> roleManager, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configration = configration;
             _mapper = mapper;
             _appUserService = appUserService;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -52,16 +56,26 @@ namespace HotelManagement.WebAPILayer.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(CreateNewUserDTO createNewUserDTO)
         {
-            var result = _mapper.Map<AppUser>(createNewUserDTO);
-            await _userManager.CreateAsync(result);
-            return Ok("Kayıt Başarılı");
+            var user = _mapper.Map<AppUser>(createNewUserDTO);
+            var createResult = await _userManager.CreateAsync(user, createNewUserDTO.Password);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            var confirmationLink = $"{Request.Scheme}://{Request.Host}/api/Account/ConfirmEmail?userId={user.Id}&token={encodedToken}";
+            await _emailService.SendEmailAsync(user.Email, "Email Doğrulama",
+                $"<h3>Hesabınızı doğrulamak için aşağıdaki linke tıklayın:</h3>" +
+                $"<a href='{confirmationLink}'>Emaili Doğrula</a>");
+
+            return Ok("Kayıt başarılı. Lütfen emailinizi doğrulayın.");
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
             var user = await _userManager.FindByNameAsync(loginUserDTO.Username);
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+                return BadRequest("Email adresinizi doğrulamalısınız.");
+
+            var passwordCheck = await _signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
             var token = TokenGenerator.GeneratorToken(user, _configration);
             return Ok(new TokenResponseDTO { Token = token });
         }
@@ -69,7 +83,7 @@ namespace HotelManagement.WebAPILayer.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var entity = _userManager.Users.FirstOrDefault(x=>x.Id == id);
+            var entity = _userManager.Users.FirstOrDefault(x => x.Id == id);
             await _userManager.DeleteAsync(entity);
             return Ok("Silindi");
         }
@@ -111,6 +125,18 @@ namespace HotelManagement.WebAPILayer.Controllers
             }
             await _userManager.UpdateAsync(user);
             return Ok("Güncellendi");
+        }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(int userId, string token)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+            if (result.Succeeded)
+                return Ok("Email doğrulandı");
+
+            return BadRequest("Email doğrulanamadı");
         }
     }
 }

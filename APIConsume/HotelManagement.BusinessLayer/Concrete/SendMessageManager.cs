@@ -32,7 +32,7 @@ namespace HotelManagement.BusinessLayer.Concrete
         public void InsertBL(SendMessage entity)
         {
             _sendMessageDal.Insert(entity);
-            _emailService.SendEmail(entity.ReceiverEmail, entity.Subject, entity.Content);
+            _emailService.SendEmailAsync(entity.ReceiverEmail, entity.Subject, entity.Content);
         }
 
         public void UpdateBL(SendMessage entity)

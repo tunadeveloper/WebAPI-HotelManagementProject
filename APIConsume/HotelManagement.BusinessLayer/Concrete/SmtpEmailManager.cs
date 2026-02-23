@@ -19,7 +19,7 @@ namespace HotelManagement.BusinessLayer.Concrete
             _config = config;
         }
 
-        public void SendEmail(string to, string subject, string body)
+        public async Task SendEmailAsync(string to, string subject, string body)
         {
             var host = _config["EmailSettings:Host"];
             var port = int.Parse(_config["EmailSettings:Port"]);
@@ -27,21 +27,21 @@ namespace HotelManagement.BusinessLayer.Concrete
             var password = _config["EmailSettings:Password"];
             var enableSSL = bool.Parse(_config["EmailSettings:EnableSSL"]);
 
-            using (var client = new SmtpClient(host,port))
+            using (var client = new SmtpClient(host, port))
             {
                 client.EnableSsl = enableSSL;
                 client.UseDefaultCredentials = false;
                 client.Credentials = new NetworkCredential(email, password);
 
                 var mailMessage = new MailMessage(
-                        new MailAddress(email, "Otel Yönetim Sistemi"),
-                        new MailAddress(to));
+                    new MailAddress(email, "Otel Yönetim Sistemi"),
+                    new MailAddress(to));
 
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
                 mailMessage.IsBodyHtml = true;
 
-                client.Send(mailMessage);
+                await client.SendMailAsync(mailMessage);
             }
         }
     }
