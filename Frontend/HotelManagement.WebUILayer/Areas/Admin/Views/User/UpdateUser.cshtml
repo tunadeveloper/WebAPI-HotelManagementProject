@@ -1,8 +1,10 @@
 @using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO
+@using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs
 @model UpdateUserDTO
 @{
-    ViewData["Title"] = "UpdateUser";
+    ViewData["Title"] = "Kullanıcı Güncelle";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+    var workLocations = ViewBag.WorkLocations as List<ResultWorkLocationDTO> ?? new List<ResultWorkLocationDTO>();
 }
 
 <div class="mb-3">
@@ -11,7 +13,7 @@
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="/Admin/Dashboard/Index">Ana Sayfa</a></li>
             <li class="breadcrumb-item"><a href="/Admin/User/Index">Kullanıcı Listesi</a></li>
-            <li class="breadcrumb-item active">Yeni Kullanıcı</li>
+            <li class="breadcrumb-item active">Kullanıcı Güncelle</li>
         </ol>
     </nav>
 </div>
@@ -19,43 +21,56 @@
 <div class="col-lg-12 d-flex align-items-stretch">
     <div class="card w-100">
         <div class="card-body p-4">
-            <h5 class="mb-4 fw-bold">Yeni Kullanıcı Ekle</h5>
-
+            <h5 class="mb-4 fw-bold">Kullanıcı Güncelle</h5>
             @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
 
             <form method="post" action="/Admin/User/UpdateUser">
-                <input type="hidden" name="id" value="@Model.id"/>
+                <input type="hidden" name="id" value="@(Model?.id ?? 0)" />
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="name" class="form-label">Ad</label>
-                        <input type="text" class="form-control" id="name" name="Name" placeholder="Ad" value="@Model.name" />
-                        @Html.ValidationMessage("Name", new { @class = "text-danger small" })
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Ad" value="@(Model?.name)" />
+                        @Html.ValidationMessage("name", new { @class = "text-danger small" })
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="surname" class="form-label">Soyad</label>
-                        <input type="text" class="form-control" id="surname" name="Surname" placeholder="Soyad" value="@Model.surname" />
-                        @Html.ValidationMessage("Surname", new { @class = "text-danger small" })
+                        <input type="text" class="form-control" id="surname" name="surname" placeholder="Soyad" value="@(Model?.surname)" />
+                        @Html.ValidationMessage("surname", new { @class = "text-danger small" })
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">Kullanıcı Adı</label>
-                    <input type="text" class="form-control" id="username" name="Username" placeholder="Kullanıcı adı" value="@Model.userName" />
-                    @Html.ValidationMessage("Username", new { @class = "text-danger small" })
+                    <input type="text" class="form-control" id="username" name="userName" placeholder="Kullanıcı adı" value="@(Model?.userName)" />
+                    @Html.ValidationMessage("userName", new { @class = "text-danger small" })
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">E-posta</label>
-                    <input type="email" class="form-control" id="email" name="Email" placeholder="ornek@email.com" value="@Model.email" />
-                    @Html.ValidationMessage("Email", new { @class = "text-danger small" })
+                    <input type="email" class="form-control" id="email" name="email" placeholder="ornek@email.com" value="@(Model?.email)" />
+                    @Html.ValidationMessage("email", new { @class = "text-danger small" })
+                </div>
+                <div class="mb-3">
+                    <label for="workLocationId" class="form-label">Çalışma Lokasyonu</label>
+                    <select class="form-select" id="workLocationId" name="WorkLocation.Id">
+                        <option value="0">Seçiniz</option>
+                        @foreach (var wl in workLocations)
+                        {
+                            <option value="@wl.Id" @(Model?.WorkLocation?.Id == wl.Id ? "selected" : "")>@(wl.Name ?? "-") - @(wl.City ?? "-")</option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Telefon</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Telefon" value="@(Model?.phoneNumber?.ToString())" />
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Şifre</label>
-                    <input type="password" class="form-control" id="password" name="Password" placeholder="Şifre" value="@Model.password" />
-                    @Html.ValidationMessage("Password", new { @class = "text-danger small" })
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Şifre (değiştirmek için doldurun)" />
+                    @Html.ValidationMessage("password", new { @class = "text-danger small" })
                 </div>
                 <div class="mb-4">
                     <label for="confirmPassword" class="form-label">Şifre Tekrar</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Şifre tekrar" value="@Model.confirmPassword" />
-                    @Html.ValidationMessage("ConfirmPassword", new { @class = "text-danger small" })
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Şifre tekrar" />
+                    @Html.ValidationMessage("confirmPassword", new { @class = "text-danger small" })
                 </div>
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary">Kaydet</button>

@@ -4,6 +4,7 @@ using HotelManagement.DataTransferObjectLayer.DTOs.LoginDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.TokenDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
+using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
 using HotelManagement.EntityLayer.Concrete;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,10 @@ namespace HotelManagement.WebAPILayer.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = _appUserService.GetByIdBL(id);
+            if (user == null)
+                return NotFound();
             var value = _mapper.Map<UpdateUserDTO>(user);
+            value.WorkLocation ??= new ResultWorkLocationDTO { Id = user.WorkLocationId };
             return Ok(value);
         }
 
@@ -86,10 +90,13 @@ namespace HotelManagement.WebAPILayer.Controllers
             user.Email = dto.email;
             user.Name = dto.name;
             user.Surname = dto.surname;
+            user.PhoneNumber = dto.phoneNumber?.ToString();
+            user.WorkLocationId = dto.WorkLocation.Id;
 
-            if (!string.IsNullOrEmpty(dto.password)){
+            if (!string.IsNullOrEmpty(dto.password))
+            {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var reset = await _userManager.ResetPasswordAsync(user, token, dto.password);
+                await _userManager.ResetPasswordAsync(user, token, dto.password);
             }
             await _userManager.UpdateAsync(user);
             return Ok("Güncellendi");

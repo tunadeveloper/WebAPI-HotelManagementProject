@@ -1,9 +1,9 @@
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
-using HotelManagement.EntityLayer.Concrete;
-using Microsoft.AspNetCore.Identity;
+using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,19 +30,32 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             return View(values ?? new List<ResultUserDTO>());
         }
 
-        public IActionResult InsertUser() => View(new CreateNewUserDTO());
+        public async Task<IActionResult> InsertUser()
+        {
+            var workLocations = await GetWorkLocationsAsync();
+            ViewBag.WorkLocations = workLocations;
+            return View(new CreateNewUserDTO());
+        }
 
         [HttpPost]
         public async Task<IActionResult> InsertUser(CreateNewUserDTO dto)
         {
             if (!ModelState.IsValid)
+            {
+                ViewBag.WorkLocations = await GetWorkLocationsAsync();
                 return View(dto);
+            }
             var client = _httpClientFactory.CreateClient("apiClient");
-            var jsonData = JsonConvert.SerializeObject(dto);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
+            var jsonData = JsonConvert.SerializeObject(dto, settings);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("http://localhost:5191/api/Account", content);
             if (!responseMessage.IsSuccessStatusCode)
+            {
+                ViewBag.WorkLocations = await GetWorkLocationsAsync();
+                TempData["InsertError"] = "Kayıt başarısız.";
                 return View(dto);
+            }
             return RedirectToAction("Index", "User", new { Area = "Admin" });
         }
 
@@ -57,12 +70,12 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("apiClient");
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Account/" + id);
-            if (!responseMessage.IsSuccessStatusCode)
-                return RedirectToAction("Index", "User", new { Area = "Admin" });
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<UpdateUserDTO>(jsonData);
-            if (values == null)
-                return RedirectToAction("Index", "User", new { Area = "Admin" });
+
+            values.WorkLocation ??= new ResultWorkLocationDTO();
+            var workLocations = await GetWorkLocationsAsync();
+            ViewBag.WorkLocations = workLocations;
             return View(values);
         }
 
@@ -71,9 +84,17 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("apiClient");
             var jsonData = JsonConvert.SerializeObject(dto);
-            StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync($"http://localhost:5191/api/Account/{dto.id}", content);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PutAsync("http://localhost:5191/api/Account", content);
             return RedirectToAction("Index", "User", new { Area = "Admin" });
+        }
+
+        private async Task<List<ResultWorkLocationDTO>> GetWorkLocationsAsync()
+        {
+            var client = _httpClientFactory.CreateClient("apiClient");
+            var response = await client.GetAsync("http://localhost:5191/api/WorkLocation");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<ResultWorkLocationDTO>>(jsonData);
         }
     }
 }
