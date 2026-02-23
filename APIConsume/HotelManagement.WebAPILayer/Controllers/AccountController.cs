@@ -5,10 +5,8 @@ using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.TokenDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
 using HotelManagement.EntityLayer.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace HotelManagement.WebAPILayer.Controllers
@@ -19,7 +17,6 @@ namespace HotelManagement.WebAPILayer.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly RoleManager<AppRole> _roleManager;
         private readonly IAppUserService _appUserService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configration;
@@ -40,17 +37,19 @@ namespace HotelManagement.WebAPILayer.Controllers
             return Ok(values);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var user = _appUserService.GetByIdBL(id);
+            var value = _mapper.Map<UpdateUserDTO>(user);
+            return Ok(value);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(CreateNewUserDTO createNewUserDTO)
         {
-            var appUser = new AppUser()
-            {
-                Name = createNewUserDTO.Name,
-                Surname = createNewUserDTO.Surname,
-                Email = createNewUserDTO.Email,
-                UserName = createNewUserDTO.Username,
-                WorkLocationId = createNewUserDTO.WorkLocationId
-            };
+            var result = _mapper.Map<AppUser>(createNewUserDTO);
+            await _userManager.CreateAsync(result);
             return Ok("Kayıt Başarılı");
         }
 
@@ -58,15 +57,8 @@ namespace HotelManagement.WebAPILayer.Controllers
         public async Task<IActionResult> Login(LoginUserDTO loginUserDTO)
         {
             var user = await _userManager.FindByNameAsync(loginUserDTO.Username);
-            if (user == null)
-                return BadRequest("Kullanıcı adı veya şifre hatalı.");
-
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginUserDTO.Password, false);
-            if (!result.Succeeded)
-                return BadRequest("Kullanıcı adı veya şifre hatalı.");
-
             var token = TokenGenerator.GeneratorToken(user, _configration);
-
             return Ok(new TokenResponseDTO { Token = token });
         }
 
@@ -84,6 +76,23 @@ namespace HotelManagement.WebAPILayer.Controllers
             var user = await _userManager.FindByIdAsync(userId.ToString());
             var role = await _userManager.GetRolesAsync(user);
             return Ok(role);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UpdateUserDTO dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.id.ToString());
+            user.UserName = dto.userName;
+            user.Email = dto.email;
+            user.Name = dto.name;
+            user.Surname = dto.surname;
+
+            if (!string.IsNullOrEmpty(dto.password)){
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var reset = await _userManager.ResetPasswordAsync(user, token, dto.password);
+            }
+            await _userManager.UpdateAsync(user);
+            return Ok("Güncellendi");
         }
     }
 }

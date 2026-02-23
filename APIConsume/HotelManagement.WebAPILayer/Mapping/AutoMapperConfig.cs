@@ -60,6 +60,7 @@ namespace HotelManagement.WebAPILayer.Mapping
             CreateMap<CreateNewUserDTO, AppUser>().ReverseMap();
             CreateMap<LoginUserDTO, AppUser>().ReverseMap();
             CreateMap<ResultUserDTO, AppUser>().ReverseMap();
+            CreateMap<UpdateUserDTO, AppUser>().ReverseMap();
 
             CreateMap<InsertAppRoleDTO, AppRole>().ReverseMap();
             CreateMap<UpdateAppRoleDTO, AppRole>().ReverseMap();
