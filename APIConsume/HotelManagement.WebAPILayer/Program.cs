@@ -41,6 +41,8 @@ builder.Services.AddScoped<IWorkLocationService, WorkLocationManager>();
 builder.Services.AddScoped<IEmailService, SmtpEmailManager>();
 builder.Services.AddScoped<IAppUserDal, EfAppUserDal>();
 builder.Services.AddScoped<IAppUserService, AppUserManager>();
+builder.Services.AddScoped<IAppRoleDal, EfAppRoleDal>();
+builder.Services.AddScoped<IAppRoleService, AppRoleManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

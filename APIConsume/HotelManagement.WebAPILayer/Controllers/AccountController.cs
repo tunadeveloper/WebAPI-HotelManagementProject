@@ -19,10 +19,11 @@ namespace HotelManagement.WebAPILayer.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IAppUserService _appUserService;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configration;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper, IAppUserService appUserService)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration configration, IMapper mapper, IAppUserService appUserService, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -75,6 +76,14 @@ namespace HotelManagement.WebAPILayer.Controllers
             var entity = _userManager.Users.FirstOrDefault(x=>x.Id == id);
             await _userManager.DeleteAsync(entity);
             return Ok("Silindi");
+        }
+
+        [HttpGet("GetRolesByUser/{userId}")]
+        public async Task<IActionResult> GetRolesByUser(int userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var role = await _userManager.GetRolesAsync(user);
+            return Ok(role);
         }
     }
 }
