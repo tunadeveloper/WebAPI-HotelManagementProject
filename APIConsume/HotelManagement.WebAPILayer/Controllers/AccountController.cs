@@ -78,8 +78,19 @@ namespace HotelManagement.WebAPILayer.Controllers
         public async Task<IActionResult> GetRolesByUser(int userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
-            var role = await _userManager.GetRolesAsync(user);
-            return Ok(role);
+            var roles = await _userManager.GetRolesAsync(user);
+            return Ok(roles);
+        }
+
+        [HttpPost("AssignRoles")]
+        public async Task<IActionResult> AssignRolesToUser(AssignRolesDTO dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.UserId.ToString());
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+            if (dto.RoleNames != null && dto.RoleNames.Count > 0)
+                await _userManager.AddToRolesAsync(user, dto.RoleNames);
+            return Ok("Roller güncellendi");
         }
 
         [HttpPut]

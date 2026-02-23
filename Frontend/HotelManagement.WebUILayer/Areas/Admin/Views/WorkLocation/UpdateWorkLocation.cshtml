@@ -1,0 +1,29 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs
+@model UpdateWorkLocationDTO
+@{
+    ViewData["Title"] = "Lokasyon Düzenle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Çalışma Lokasyonunu Düzenle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="UpdateWorkLocation" asp-controller="WorkLocation" asp-area="Admin">
+                    <input type="hidden" name="Id" value="@Model?.Id" />
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Ad</label>
+                        <input type="text" class="form-control" id="Name" name="Name" value="@Model?.Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="City" class="form-label">Şehir</label>
+                        <input type="text" class="form-control" id="City" name="City" value="@Model?.City" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/WorkLocation/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

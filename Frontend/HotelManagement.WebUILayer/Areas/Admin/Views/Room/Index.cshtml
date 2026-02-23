@@ -12,7 +12,7 @@
                 <h5 class="mb-0 fw-bold">Oda Listesi</h5>
             </div>
            
-            <div class="table-responsive" data-simplebar>
+            <div class="table-responsive">
                 <table class="table table-borderless align-middle text-nowrap">
                     <thead>
                         <tr>
@@ -25,37 +25,68 @@
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
                                 <td><span class="fs-3 fw-normal">@item.Id</span></td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
+                                <td>
+                                    <div class="d-flex align-items-center">
                                         @if (!string.IsNullOrEmpty(item.CoverImage))
-                                            {
+                                        {
                                             <img src="@item.CoverImage" width="50" height="50" class="rounded object-fit-cover" alt="@item.Title" />
-                                            }
-                                            else
-                                            {
-                                                <div class="rounded bg-light d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
-                                                    <i class="ti ti-photo fs-4 text-muted"></i>
-                                                </div>
-                                            }
-                                        </div>
-                                    </td>
+                                        }
+                                        else
+                                        {
+                                            <div class="rounded bg-light d-flex align-items-center justify-content-center" style="width:50px;height:50px;">
+                                                <i class="ti ti-photo fs-4 text-muted"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                </td>
                                 <td><p class="fs-3 fw-normal mb-0">@item.RoomNumber</p></td>
                                 <td><p class="fs-3 fw-normal mb-0">@item.Title</p></td>
                                 <td><p class="fs-3 fw-normal mb-0">@item.Price ₺</p></td>
-                                    <td>
-                                    <a href="/Admin/Room/DeleteRoom/@item.Id" class="btn btn-danger">Sil</a>
-                                    <a href="/Admin/Room/UpdateRoom/@item.Id" class="btn btn-warning">Düzenle</a>
-                                        <a href="#" class="btn btn-primary">Detaylar</a>
-                                    </td>
-                                </tr>
-                            }
+                                <td>
+                                    <a href="/Admin/Room/DeleteRoom/@item.Id" class="btn btn-danger btn-sm">Sil</a>
+                                    <a href="/Admin/Room/UpdateRoom/@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#roomModal_@item.Id">Detaylar</button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
+            @foreach (var item in Model)
+            {
+                <div class="modal fade" id="roomModal_@item.Id" tabindex="-1" aria-labelledby="roomModalLabel_@item.Id" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="roomModalLabel_@item.Id">@item.Title - Oda Detayı</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                            </div>
+                            <div class="modal-body">
+                                @if (!string.IsNullOrEmpty(item.CoverImage))
+                                {
+                                    <div class="mb-3">
+                                        <img src="@item.CoverImage" class="img-fluid rounded" alt="@item.Title" style="max-height: 200px;" />
+                                    </div>
+                                }
+                                <p class="mb-1"><strong>Oda No:</strong> @item.RoomNumber</p>
+                                <p class="mb-1"><strong>Başlık:</strong> @item.Title</p>
+                                <p class="mb-1"><strong>Fiyat:</strong> @item.Price ₺</p>
+                                <p class="mb-1"><strong>Yatak Sayısı:</strong> @(item.BedCount)</p>
+                                <p class="mb-1"><strong>Banyo Sayısı:</strong> @(item.BathCount)</p>
+                                <p class="mb-3 text-muted small">@(item.Description)</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                <a href="/Admin/Room/UpdateRoom/@item.Id" class="btn btn-primary">Düzenle</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <a href="/Admin/Room/InsertRoom" class="btn btn-success">Yeni Oda</a>
         </div>
     </div>

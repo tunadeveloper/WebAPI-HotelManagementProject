@@ -1,0 +1,28 @@
+@using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs
+@model InsertWorkLocationDTO
+@{
+    ViewData["Title"] = "Lokasyon Ekle";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title fw-semibold mb-4">Yeni Çalışma Lokasyonu Ekle</h5>
+        <div class="card">
+            <div class="card-body">
+                <form method="post" asp-action="InsertWorkLocation" asp-controller="WorkLocation" asp-area="Admin">
+                    <div class="mb-3">
+                        <label for="Name" class="form-label">Ad</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="City" class="form-label">Şehir</label>
+                        <input type="text" class="form-control" id="City" name="City" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <a href="/Admin/WorkLocation/Index" class="btn btn-dark">İptal Et</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

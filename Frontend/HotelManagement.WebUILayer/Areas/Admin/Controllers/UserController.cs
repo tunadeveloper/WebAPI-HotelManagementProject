@@ -1,3 +1,4 @@
+using HotelManagement.DataTransferObjectLayer.DTOs.AppRoleDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.RegisterDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
@@ -23,11 +24,9 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient("apiClient");
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Account");
-            if (!responseMessage.IsSuccessStatusCode)
-                return View(new List<ResultUserDTO>());
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultUserDTO>>(jsonData);
-            return View(values ?? new List<ResultUserDTO>());
+            return View(values);
         }
 
         public async Task<IActionResult> InsertUser()
@@ -46,16 +45,9 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
                 return View(dto);
             }
             var client = _httpClientFactory.CreateClient("apiClient");
-            var settings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = NullValueHandling.Ignore };
-            var jsonData = JsonConvert.SerializeObject(dto, settings);
+            var jsonData = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("http://localhost:5191/api/Account", content);
-            if (!responseMessage.IsSuccessStatusCode)
-            {
-                ViewBag.WorkLocations = await GetWorkLocationsAsync();
-                TempData["InsertError"] = "Kayıt başarısız.";
-                return View(dto);
-            }
             return RedirectToAction("Index", "User", new { Area = "Admin" });
         }
 
@@ -86,6 +78,38 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             var jsonData = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PutAsync("http://localhost:5191/api/Account", content);
+            return RedirectToAction("Index", "User", new { Area = "Admin" });
+        }
+
+        public async Task<IActionResult> UpdateUserRoles(int id)
+        {
+            var client = _httpClientFactory.CreateClient("apiClient");
+            var userResponse = await client.GetAsync("http://localhost:5191/api/Account/" + id);
+            var userJson = await userResponse.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<UpdateUserDTO>(userJson);
+
+            var rolesResponse = await client.GetAsync("http://localhost:5191/api/Role");
+            var rolesJson = await rolesResponse.Content.ReadAsStringAsync();
+            var allRoles = JsonConvert.DeserializeObject<List<ResultAppRoleDTO>>(rolesJson);
+
+            var userRolesResponse = await client.GetAsync("http://localhost:5191/api/Account/GetRolesByUser/" + id);
+            var userRolesJson = await userRolesResponse.Content.ReadAsStringAsync();
+            var userRoleNames = JsonConvert.DeserializeObject<List<string>>(userRolesJson);
+
+            ViewBag.AllRoles = allRoles;
+            ViewBag.UserRoleNames = userRoleNames;
+            ViewBag.UserId = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserRoles(int userId, List<string> roleNames)
+        {
+            var client = _httpClientFactory.CreateClient("apiClient");
+            var dto = new AssignRolesDTO { UserId = userId, RoleNames = roleNames };
+            var jsonData = JsonConvert.SerializeObject(dto);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            await client.PostAsync("http://localhost:5191/api/Account/AssignRoles", content);
             return RedirectToAction("Index", "User", new { Area = "Admin" });
         }
 

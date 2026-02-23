@@ -1,6 +1,4 @@
 using HotelManagement.DataTransferObjectLayer.DTOs.RoomDTOs;
-using HotelManagement.DataTransferObjectLayer.DTOs.TestimonialDTOs;
-using HotelManagement.WebUILayer.Areas.Admin.Models.Room;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -26,9 +24,9 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
-                return View(values);
+                return View(values ?? new List<ResultRoomDTO>());
             }
-            return View();
+            return View(new List<ResultRoomDTO>());
         }
 
         public IActionResult InsertRoom() => View();
@@ -58,21 +56,21 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateRoom(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("apiClient");
             var responseMessage = await client.GetAsync($"http://localhost:5191/api/Room/{id}");
-            if(responseMessage.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateTestimonialDTO>(jsonData);
+                var values = JsonConvert.DeserializeObject<UpdateRoomDTO>(jsonData);
                 return View(values);
             }
-            return View();
+            return RedirectToAction("Index", "Room", new { area = "Admin" });
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateRoom(UpdateRoomDTO dto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("apiClient");
             var jsonData = JsonConvert.SerializeObject(dto);
             StringContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PutAsync("http://localhost:5191/api/Room", content);
