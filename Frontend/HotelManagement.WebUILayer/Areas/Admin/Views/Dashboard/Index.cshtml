@@ -1,7 +1,9 @@
-﻿
+﻿@using HotelManagement.DataTransferObjectLayer.DTOs.HotelBookingKaggleDatasetDTOs
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+    var dataset = ViewBag.KaggleHotelDataset as List<ResultHotelBookingDTO>;
 }
 <div class="row">
                         <div class="col-lg-8 d-flex align-items-strech">

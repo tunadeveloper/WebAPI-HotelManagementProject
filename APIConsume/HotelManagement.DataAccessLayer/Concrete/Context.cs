@@ -21,5 +21,6 @@ namespace HotelManagement.DataAccessLayer.Concrete
         public DbSet<Message> Messages { get; set; }
         public DbSet<SendMessage> SendMessages { get; set; }
         public DbSet<WorkLocation> WorkLocations { get; set; }
+        public DbSet<HotelBookingKaggleDataset> hotelBookingKaggleDatasets { get; set; }
     }
 }

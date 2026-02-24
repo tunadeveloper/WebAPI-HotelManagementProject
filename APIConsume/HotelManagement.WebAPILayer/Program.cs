@@ -46,6 +46,8 @@ builder.Services.AddScoped<IAppUserDal, EfAppUserDal>();
 builder.Services.AddScoped<IAppUserService, AppUserManager>();
 builder.Services.AddScoped<IAppRoleDal, EfAppRoleDal>();
 builder.Services.AddScoped<IAppRoleService, AppRoleManager>();
+builder.Services.AddScoped<IHotelBookingKaggleDatasetDal, EfHotelBookingKaggleDatasetDal>();
+builder.Services.AddScoped<IHotelBookingKaggleDatasetService, HotelBookingKaggleDatasetManager>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

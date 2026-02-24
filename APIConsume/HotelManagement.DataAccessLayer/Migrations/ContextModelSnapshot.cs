@@ -230,6 +230,145 @@ namespace HotelManagement.DataAccessLayer.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("HotelManagement.EntityLayer.Concrete.HotelBookingKaggleDataset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("adr")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("adults")
+                        .HasColumnType("float");
+
+                    b.Property<string>("agent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("arrival_date_day_of_month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("arrival_date_month")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("arrival_date_week_number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("arrival_date_year")
+                        .HasColumnType("int");
+
+                    b.Property<string>("assigned_room_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("babies")
+                        .HasColumnType("float");
+
+                    b.Property<int>("booking_changes")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("children")
+                        .HasColumnType("float");
+
+                    b.Property<string>("company")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("credit_card")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("customer_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("days_in_waiting_list")
+                        .HasColumnType("int");
+
+                    b.Property<string>("deposit_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("distribution_channel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("hotel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("is_canceled")
+                        .HasColumnType("int");
+
+                    b.Property<int>("is_repeated_guest")
+                        .HasColumnType("int");
+
+                    b.Property<int>("lead_time")
+                        .HasColumnType("int");
+
+                    b.Property<string>("market_segment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("meal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("phone_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("previous_bookings_not_canceled")
+                        .HasColumnType("int");
+
+                    b.Property<int>("previous_cancellations")
+                        .HasColumnType("int");
+
+                    b.Property<int>("required_car_parking_spaces")
+                        .HasColumnType("int");
+
+                    b.Property<string>("reservation_status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reservation_status_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reserved_room_type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("stays_in_week_nights")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("stays_in_weekend_nights")
+                        .HasColumnType("float");
+
+                    b.Property<int>("total_of_special_requests")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("hotelBookingKaggleDatasets");
+                });
+
             modelBuilder.Entity("HotelManagement.EntityLayer.Concrete.Message", b =>
                 {
                     b.Property<int>("Id")
