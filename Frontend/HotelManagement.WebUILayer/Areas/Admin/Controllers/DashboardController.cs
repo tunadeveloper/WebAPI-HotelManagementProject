@@ -18,7 +18,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("http://localhost:5191/api/KaggleHotelDatasets");
+            var responseMessage = await client.GetAsync("http://localhost:5191/api/KaggleHotelDataset");
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultHotelBookingDTO>>(jsonData);
 
