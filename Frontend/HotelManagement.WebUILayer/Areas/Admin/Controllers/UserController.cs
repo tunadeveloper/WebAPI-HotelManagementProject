@@ -4,9 +4,7 @@ using HotelManagement.DataTransferObjectLayer.DTOs.UserDTO;
 using HotelManagement.DataTransferObjectLayer.DTOs.WorkLocationDTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 {
@@ -39,11 +37,6 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> InsertUser(CreateNewUserDTO dto)
         {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.WorkLocations = await GetWorkLocationsAsync();
-                return View(dto);
-            }
             var client = _httpClientFactory.CreateClient("apiClient");
             var jsonData = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
