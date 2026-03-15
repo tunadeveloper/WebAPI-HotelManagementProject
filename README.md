@@ -1,4 +1,4 @@
-# 🏨 WebAPI Otel Yönetim Sistemi
+# 🏨 Otel Yönetim Sistemi — ASP.NET Core 8.0 MVC & API
 
 ![.NET](https://img.shields.io/badge/.NET%208.0-512BD4?style=flat-square&logo=dotnet&logoColor=white)
 ![C#](https://img.shields.io/badge/C%23-239120?style=flat-square&logo=c-sharp&logoColor=white)
