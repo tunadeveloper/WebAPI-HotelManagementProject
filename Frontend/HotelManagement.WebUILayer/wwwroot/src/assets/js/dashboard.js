@@ -1,5 +1,6 @@
 $(function () {
 
+  var dashboardData = window.dashboardData || {};
 
   // =====================================
   // Profit
@@ -7,12 +8,8 @@ $(function () {
   var profit = {
     series: [
       {
-        name: "Pixel ",
-        data: [9, 5, 3, 7, 5, 10, 3],
-      },
-      {
-        name: "Ample ",
-        data: [6, 3, 9, 5, 4, 6, 4],
+        name: "Mesaj",
+        data: dashboardData.messageCounts || [0, 0, 0, 0, 0, 0, 0],
       },
     ],
     chart: {
@@ -29,7 +26,7 @@ $(function () {
       strokeDashArray: 3,
       borderColor: "rgba(0,0,0,.1)",
     },
-    colors: ["#1e88e5", "#21c1d6"],
+    colors: ["var(--bs-primary)"],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -47,7 +44,7 @@ $(function () {
     },
     xaxis: {
       type: "category",
-      categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      categories: dashboardData.messageCategories || ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"],
       axisTicks: {
         show: false,
       },
@@ -69,7 +66,7 @@ $(function () {
     },
     fill: {
       opacity: 1,
-      colors: ["var(--bs-primary)", "var(--bs-danger)"],
+      colors: ["var(--bs-primary)"],
     },
     tooltip: {
       theme: "dark",
@@ -102,8 +99,8 @@ $(function () {
   // Breakup
   // =====================================
   var grade = {
-    series: [5368, 3500, 4106],
-    labels: ["5368", "Refferal Traffic", "Oragnic Traffic"],
+    series: dashboardData.bookingStatusCounts || [0, 0, 0],
+    labels: dashboardData.bookingStatusLabels || ["Beklemede", "Onaylı", "İptal"],
     chart: {
       height: 170,
       type: "donut",
