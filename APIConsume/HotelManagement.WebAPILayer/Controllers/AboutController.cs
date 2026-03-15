@@ -18,7 +18,7 @@ namespace HotelManagement.WebAPILayer.Controllers
             _aboutService = aboutService;
             _mapper = mapper;
         }
-
+        
         [HttpGet]
         public IActionResult AboutList()
         {
