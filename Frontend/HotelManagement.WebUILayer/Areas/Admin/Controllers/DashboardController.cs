@@ -62,7 +62,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 
             ViewBag.LastSubscribers = subscribes
                 .OrderByDescending(x => x.Id)
-                .Take(7)
+                .Take(5)
                 .ToList();
 
             ViewBag.LastRooms = rooms

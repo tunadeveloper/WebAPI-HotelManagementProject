@@ -22,9 +22,9 @@ namespace HotelManagement.WebUILayer.ViewComponents
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
-                return View(values.Take(3).ToList());
+                return View(values.Take(4).ToList());
             }
-            return View(new List<ResultRoomDTO>());
+            return View();
         }
     }
 }

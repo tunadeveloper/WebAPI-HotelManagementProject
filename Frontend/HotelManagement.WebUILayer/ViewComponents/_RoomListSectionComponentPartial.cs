@@ -24,7 +24,7 @@ namespace HotelManagement.WebUILayer.ViewComponents
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
                 return View(values);
             }
-            return View(new List<ResultRoomDTO>());
+            return View();
         }
     }
 }

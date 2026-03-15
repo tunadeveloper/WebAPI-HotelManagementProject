@@ -57,11 +57,11 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultSendMessageDTO>>(jsonData) ?? new List<ResultSendMessageDTO>();
+                var values = JsonConvert.DeserializeObject<List<ResultSendMessageDTO>>(jsonData);
                 int pageNumber = page ?? 1;
                 return View(new PagedList<ResultSendMessageDTO>(values, pageNumber, 8));
             }
-            return View(new PagedList<ResultSendMessageDTO>(new List<ResultSendMessageDTO>(), 1, 8));
+            return View();
         }
 
         public IActionResult CreateMessage() => View(new InsertSendMessageDTO());
