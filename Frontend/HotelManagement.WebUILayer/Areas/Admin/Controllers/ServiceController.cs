@@ -26,7 +26,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
                 var values = JsonConvert.DeserializeObject<List<ResultServiceDTO>>(jsonData);
                 return View(values);
             }
-            return View(new List<ResultServiceDTO>());
+            return View();
         }
 
         public IActionResult InsertService() => View();

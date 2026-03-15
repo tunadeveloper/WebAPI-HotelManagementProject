@@ -25,11 +25,11 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultMessageDTO>>(jsonData) ?? new List<ResultMessageDTO>();
+                var values = JsonConvert.DeserializeObject<List<ResultMessageDTO>>(jsonData);
                 int pageNumber = page ?? 1;
                 return View(new PagedList<ResultMessageDTO>(values, pageNumber, 8));
             }
-            return View(new PagedList<ResultMessageDTO>(new List<ResultMessageDTO>(), 1, 8));
+            return View();
         }
 
         public async Task<IActionResult> DeleteInboxMessage(int id)

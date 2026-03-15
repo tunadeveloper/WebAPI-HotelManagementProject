@@ -24,7 +24,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultBookingDTO>>(jsonData) ?? new List<ResultBookingDTO>();
+                var values = JsonConvert.DeserializeObject<List<ResultBookingDTO>>(jsonData) ;
                 int pageNumber = page ?? 1;
                 return View(new PagedList<ResultBookingDTO>(values, pageNumber, 10));
             }

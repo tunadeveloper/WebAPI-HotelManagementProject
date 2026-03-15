@@ -24,9 +24,9 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultRoomDTO>>(jsonData);
-                return View(values ?? new List<ResultRoomDTO>());
+                return View(values);
             }
-            return View(new List<ResultRoomDTO>());
+            return View();
         }
 
         public IActionResult InsertRoom() => View();
