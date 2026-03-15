@@ -1,5 +1,7 @@
 @using HotelManagement.DataTransferObjectLayer.DTOs.BookingDTOs
-@model List<ResultBookingDTO>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultBookingDTO>
 @{
     ViewData["Title"] = "Rezervasyon Listesi";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
@@ -50,6 +52,17 @@
                     </tbody>
                 </table>
             </div>
+          <div class="d-flex justify-content-center mt-4">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), 
+    new PagedListRenderOptions {
+        UlElementClasses = new string[] { "pagination", "pagination-sm" },
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        MaximumPageNumbersToDisplay = 5
+    })
+</div>
             <a href="/Admin/Booking/InsertBooking" class="btn btn-success">Yeni Rezervasyon</a>
         </div>
     </div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 {
@@ -16,7 +17,7 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Subscribe");
@@ -24,9 +25,10 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultSubscribeDTO>>(jsonData);
-                return View(values);
+                int pageNumber = page ?? 1;
+                return View(new PagedList<ResultSubscribeDTO>(values, pageNumber, 7));
             }
-            return View(new List<ResultSubscribeDTO>());
+            return View();
         }
 
         public IActionResult InsertSubscribe() => View();

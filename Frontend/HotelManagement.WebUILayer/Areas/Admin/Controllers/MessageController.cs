@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
 {
@@ -17,17 +18,18 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IActionResult> Inbox()
+        public async Task<IActionResult> Inbox(int? page)
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:5191/api/Message");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultMessageDTO>>(jsonData);
-                return View(values);
+                var values = JsonConvert.DeserializeObject<List<ResultMessageDTO>>(jsonData) ?? new List<ResultMessageDTO>();
+                int pageNumber = page ?? 1;
+                return View(new PagedList<ResultMessageDTO>(values, pageNumber, 8));
             }
-            return View();
+            return View(new PagedList<ResultMessageDTO>(new List<ResultMessageDTO>(), 1, 8));
         }
 
         public async Task<IActionResult> DeleteInboxMessage(int id)
@@ -48,17 +50,18 @@ namespace HotelManagement.WebUILayer.Areas.Admin.Controllers
             return RedirectToAction("Sendbox", "Message", new { area = "Admin" });
         }
 
-        public async Task<IActionResult> Sendbox()
+        public async Task<IActionResult> Sendbox(int? page)
         {
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("http://localhost:5191/api/SendMessage");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultSendMessageDTO>>(jsonData);
-                return View(values);
+                var values = JsonConvert.DeserializeObject<List<ResultSendMessageDTO>>(jsonData) ?? new List<ResultSendMessageDTO>();
+                int pageNumber = page ?? 1;
+                return View(new PagedList<ResultSendMessageDTO>(values, pageNumber, 8));
             }
-            return View();
+            return View(new PagedList<ResultSendMessageDTO>(new List<ResultSendMessageDTO>(), 1, 8));
         }
 
         public IActionResult CreateMessage() => View(new InsertSendMessageDTO());

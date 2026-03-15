@@ -1,5 +1,7 @@
 @using HotelManagement.DataTransferObjectLayer.DTOs.SubscribeDTOs
-@model List<ResultSubscribeDTO>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultSubscribeDTO>
 @{
     ViewData["Title"] = "Aboneler";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
@@ -35,6 +37,17 @@
                     </tbody>
                 </table>
             </div>
+          <div class="d-flex justify-content-center mt-4">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), 
+    new PagedListRenderOptions {
+        UlElementClasses = new string[] { "pagination", "pagination-sm" },
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        MaximumPageNumbersToDisplay = 5
+    })
+</div>
             <a href="/Admin/Subscribe/InsertSubscribe" class="btn btn-success">Yeni Abone</a>
         </div>
     </div>

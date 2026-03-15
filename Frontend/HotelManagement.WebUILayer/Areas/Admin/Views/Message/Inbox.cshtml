@@ -1,5 +1,7 @@
 @using HotelManagement.DataTransferObjectLayer.DTOs.MessageDTOs
-@model List<ResultMessageDTO>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@model IPagedList<ResultMessageDTO>
 @{
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
@@ -90,4 +92,16 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="d-flex justify-content-center mt-4">
+    @Html.PagedListPager(Model, page => Url.Action("Inbox", new { page }), 
+    new PagedListRenderOptions {
+        UlElementClasses = new string[] { "pagination", "pagination-sm" },
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+        DisplayLinkToLastPage = PagedListDisplayMode.Always,
+        MaximumPageNumbersToDisplay = 5
+    })
 </div>
